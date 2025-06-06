@@ -1,0 +1,23 @@
+button[ngbDropdownToggle]::after {
+  display: none !important;
+}
+
+button[ngbDropdownToggle]:active {
+  border: none;
+  background-color: rgb(199, 199, 199);
+}
+
+button[ngbDropdownToggle]:focus {
+  border: none;
+}
+
+.plant-image {
+  width: 120px !important;
+  height: 120px !important;
+  object-fit: cover !important;
+  transition: transform 0.3s ease-in-out !important;
+}
+
+.plant-card:hover .plant-image {
+  transform: scale(1.05) !important;
+}

@@ -1,0 +1,18 @@
+<div *ngIf="direction === 'row'" class="d-flex flex-row align-items-center justify-content-center gap-1">
+    <lucide-icon class="d-flex justify-content-center" [name]="Sun" color="#397B2C" size="15"></lucide-icon>
+    <p class="m-0 text-black d-flex justify-content-center" style=" line-height: 1;">
+        <span style="font-size: 14px; font-weight: 600; line-height: 1;">{{ exposition }}</span>
+        <span class="d-flex justify-content-end align-items-end" style="font-size: 8px; font-weight: 400;">%</span>
+    </p>
+</div>
+
+<div *ngIf="direction === 'column'" class="d-flex flex-column align-items-center">
+    <div class="d-flex flex-row align-items-center justify-content-center gap-1 mb-1">
+        <lucide-icon class="d-flex justify-content-center" [name]="Sun" color="#397B2C" size="22"></lucide-icon>
+        <p class="m-0 text-black d-flex justify-content-center" style=" line-height: 1;">
+            <span style="font-size: 22px; font-weight: 600; line-height: 1;">{{ exposition }}</span>
+            <span class="d-flex justify-content-end align-items-end" style="font-size: 12px; font-weight: 400;">%</span>
+        </p>
+    </div>
+    <span class="m-0 p-0" style="font-size: 10px; line-height: 1; color: #B9B9B9;">Exposition</span>
+</div>

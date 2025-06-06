@@ -1,0 +1,6 @@
+<div class="d-flex flex-column align-items-center">
+    <span class="fw-bold p-0" style="font-size: 10px;">{{ getTitle() }}</span>
+    <div class="fw-bold" style="font-size: 12px;">
+        <span class="p-0 m-0" *ngFor="let star of getStars(); let index = index" [style.color]="index < difficulty ? 'yellow' : 'black'">{{ star }}</span>
+    </div>
+</div>

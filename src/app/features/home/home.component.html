@@ -1,0 +1,23 @@
+<div class="page-container d-flex flex-column mx-2 my-2">
+    <div class="d-flex justify-content-center mb-2">
+        <h1 class="fw-bold">Mes plantes</h1>
+    </div>
+    
+    <div class="overflow-auto">
+        <div class="d-grid gap-2" style="grid-template-columns: repeat(2, 1fr); ">
+            <app-plant-list-card
+                *ngFor="let plant of plants"
+                [temperature]="plant.temperature"
+                [exposition]="plant.exposition"
+                [humidity]="plant.humidity"
+                (click)="goToPlant(123)"
+                style="cursor: pointer;"
+                >
+            </app-plant-list-card>
+        </div>
+    </div>
+    
+    <div class="my-4 d-flex justify-content-center">
+        <app-plant-button-add></app-plant-button-add>
+    </div>
+</div>

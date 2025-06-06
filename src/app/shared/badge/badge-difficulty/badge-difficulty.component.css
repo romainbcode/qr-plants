@@ -1,0 +1,24 @@
+.star-icon {
+  padding: 6px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid black; /* visible pour les étoiles vides */
+}
+
+.star-icon.full {
+  background-color: black;
+}
+
+.star-icon.full lucide-icon {
+  color: white;
+}
+
+.star-icon.empty {
+  background-color: transparent;
+}
+
+.star-icon.empty lucide-icon {
+  color: black;
+}

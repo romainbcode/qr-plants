@@ -1,0 +1,22 @@
+<form [formGroup]="plantForm" (submit)="generateQRCode($event)">
+    <h4 mat-dialog-title>Génère ton QR code</h4>
+    <div class="p-4">
+        <div class="form-group w-50">
+            <label for="name">Nom de la plante<span style="color: red;">*</span></label>
+            <select class="form-select" formControlName='name'>
+                <option *ngFor="let plant of plantService.plants()" [ngValue]="plant.id">
+                    {{ plant.name }}
+                </option>
+            </select>
+          </div>
+    </div>
+    <button>Générer ton QR code</button>
+    <div *ngIf="qrCode" style="margin-top: 20px; text-align: center;">
+        <div #qrContainer></div>
+        <div style="margin-top: 4px; font-size: 30px; font-weight: bold;">
+            {{ plantName }} 
+        </div>
+        <button>Imprimer</button>
+        <a href={{url}}>Voir la fiche de votre plante</a>
+    </div>
+</form>

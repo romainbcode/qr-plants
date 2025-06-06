@@ -1,0 +1,11 @@
+.btn-add {
+    text-decoration: none;
+    border: none;
+    background-color: #DDF2D6;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 5px;
+    border: 2px solid #165612;
+}
