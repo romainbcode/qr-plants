@@ -8,15 +8,16 @@ import { BadgeStatus } from "../../../shared/badge/badge-status/badge-status.com
 import { PlantCardTemperatureComponent } from "../plant-card-temperature/plant-card-temperature.component";
 import { PlantCardExpositionComponent } from "../plant-card-light/plant-card-exposition.component";
 import { PlantCardHumidityComponent } from "../plant-card-humidity/plant-card-humidity.component";
-import { House, LucideAngularModule, QrCode } from "lucide-angular";
+import { Calendar, House, LucideAngularModule, QrCode } from "lucide-angular";
 import { CalendarComponent } from "../../../shared/calendar/calendar.component";
+import { CalendarHorizontalComponent } from "../../../shared/calendar-horizontal/calendar-horizontal.component";
 
 @Component({
     selector: 'app-plant-card',
     standalone: true,
     imports: [CommonModule, MatDialogModule, BadgeDifficultyComponent, BadgeStatus,
         PlantCardTemperatureComponent, PlantCardExpositionComponent, PlantCardHumidityComponent,
-    LucideAngularModule, CalendarComponent],
+    LucideAngularModule, CalendarComponent, CalendarHorizontalComponent],
     templateUrl: './plant-card.component.html',
     styleUrl: './plant-card.component.css'
 })
@@ -40,6 +41,7 @@ export class PlantCardComponent implements OnInit {
 
     protected readonly QrCode = QrCode;
     protected readonly House = House;
+    protected readonly Calendar = Calendar;
 
     selectTab(tab: string) {
         this.activeTab = tab;
