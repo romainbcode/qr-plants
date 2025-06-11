@@ -1,1 +1,10 @@
-<p>calendar works!</p>
+<p-calendar
+  [(ngModel)]="date"
+  dateFormat="dd/mm/yy"
+  [inline]="true"
+  [firstDayOfWeek]="firstDayOfWeek"
+  showIcon="true"
+  showButtonBar="true"
+  placeholder="Sélectionnez une date">
+</p-calendar>
+    <p>Date sélectionnée : {{ date | date:'fullDate' }}</p>

@@ -1,26 +1,36 @@
 import { Component } from '@angular/core';
-import { MatCalendarBody } from '@angular/material/datepicker';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { CalendarModule } from 'primeng/calendar';
+import { PrimeNGConfig } from 'primeng/api';
 
 @Component({
   selector: 'app-calendar',
   standalone: true,
-  imports: [CommonModule, MatCalendarBody],
-  template: `
-    <div class="card p-4">
-      <mat-calendar [(selected)]="selectedDate"></mat-calendar>
-    </div>
-  `,
-  styles: [`
-    .card {
-      max-width: 400px;
-      margin: auto;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-  `]
+  imports: [CommonModule, FormsModule, CalendarModule],
+  templateUrl: './calendar.component.html',
+  styleUrl: './calendar.component.css'
 })
 export class CalendarComponent {
-  selectedDate: Date = new Date();
+  date: Date | null = null;
+
+  firstDayOfWeek: number = 1;
+
+  constructor(private primengConfig: PrimeNGConfig) {}
+
+  ngOnInit() {
+    this.primengConfig.setTranslation({
+      firstDayOfWeek: 1,
+      dayNames: ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"],
+      dayNamesShort: ["dim", "lun", "mar", "mer", "jeu", "ven", "sam"],
+      dayNamesMin: ["D","L","M","M","J","V","S"],
+      monthNames: ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"],
+      monthNamesShort: ["janv", "févr", "mars", "avr", "mai", "juin", "juil", "août", "sept", "oct", "nov", "déc"],
+      today: 'Aujourd\'hui',
+      clear: 'Effacer',
+      dateFormat: 'dd/mm/yy',
+      weekHeader: 'Sm'
+    });
+  }
+
 }
