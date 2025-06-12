@@ -1,15 +1,15 @@
 <div class="d-flex flex-column justify-content-between mx-2" style="height: 100svh;">
-    <div class="d-flex justify-content-between mb-2">
-        <lucide-icon [name]="House"></lucide-icon>
-        <lucide-icon [name]="QrCode"></lucide-icon>
+    <div class="d-flex justify-content-between mb-2 p-2">
+        <lucide-icon [name]="House" (click)="goToHome()"></lucide-icon>
+        <lucide-icon [name]="QrCode" (click)="openQrCodeDialog($event)"></lucide-icon>
     </div>
-    <div class="d-flex flex-column p-2" style="background-color: white;">
+    <div class="d-flex flex-column p-3" style="background-color: white;">
         <div class="d-flex flex-row justify-content-between align-items-center">
             <app-badge-difficulty [difficulty]="2"></app-badge-difficulty>
-            <span class="fw-bold">{{ title }}</span>
+            <span class="fw-bold" style="font-size: 22px;">{{ title }}</span>
             <app-badge-status [etat]="etat"></app-badge-status>
         </div>
-        <div class="my-2"></div>
+        <div class="my-3"></div>
         <div class="d-flex flex-row justify-content-evenly">
             <div class="d-flex flex-column justify-content-evenly">
                 <app-plant-card-temperature [direction]="'column'" [temperature]="temperature"></app-plant-card-temperature>
@@ -19,7 +19,6 @@
             <img [src]="getImagePath()" alt="Mon image" class="plant-image">
         </div>
     </div>
-    <div class="my-1"></div>
     <div class="d-flex flex-column align-items-center mx-2 my-2">
         <nav class="d-flex flex-row mb-3">
             <button class="nav-link" [class.active]="activeTab === 'tab1'" (click)="selectTab('tab1')">

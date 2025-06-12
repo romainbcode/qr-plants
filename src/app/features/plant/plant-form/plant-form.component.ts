@@ -27,7 +27,7 @@ export class PlantFormComponent {
   generateQRCode(event: Event) {
       event.preventDefault();
     
-      this.qrCode = this.qrGeneratorService.generateQRCode(event, this.plantForm);
+      this.qrCode = this.qrGeneratorService.generateQRCode(event);
       this.plantName = this.plantForm.get('name')?.value;
 
       setTimeout(() => {

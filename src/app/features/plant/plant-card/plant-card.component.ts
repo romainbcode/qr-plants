@@ -1,8 +1,8 @@
-import { Component, Inject, OnInit } from "@angular/core";
+import { Component, ElementRef, Inject, OnInit, ViewChild } from "@angular/core";
 import { PlantService } from "../plant.service";
-import { MAT_DIALOG_DATA, MatDialogModule } from "@angular/material/dialog";
+import { MAT_DIALOG_DATA, MatDialog, MatDialogModule } from "@angular/material/dialog";
 import { CommonModule } from "@angular/common";
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BadgeDifficultyComponent } from "../../../shared/badge/badge-difficulty/badge-difficulty.component";
 import { BadgeStatus } from "../../../shared/badge/badge-status/badge-status.component";
 import { PlantCardTemperatureComponent } from "../plant-card-temperature/plant-card-temperature.component";
@@ -11,18 +11,23 @@ import { PlantCardHumidityComponent } from "../plant-card-humidity/plant-card-hu
 import { Calendar, House, LucideAngularModule, QrCode } from "lucide-angular";
 import { CalendarComponent } from "../../../shared/calendar/calendar.component";
 import { CalendarHorizontalComponent } from "../../../shared/calendar-horizontal/calendar-horizontal.component";
+import { QRGeneratorService } from "../../../shared/qr-generator/qr-generator.service";
+import QRCodeStyling from "qr-code-styling";
+import { QrGeneratorComponent } from "../../../shared/qr-generator/qr-generator.component";
 
 @Component({
     selector: 'app-plant-card',
     standalone: true,
     imports: [CommonModule, MatDialogModule, BadgeDifficultyComponent, BadgeStatus,
         PlantCardTemperatureComponent, PlantCardExpositionComponent, PlantCardHumidityComponent,
-    LucideAngularModule, CalendarComponent, CalendarHorizontalComponent],
+    LucideAngularModule, CalendarComponent, CalendarHorizontalComponent, MatDialogModule],
     templateUrl: './plant-card.component.html',
     styleUrl: './plant-card.component.css'
 })
 export class PlantCardComponent implements OnInit {
-    constructor(protected plantService: PlantService, private activatedRoute: ActivatedRoute) {}
+    @ViewChild('qrContainer', { static: false }) qrContainer!: ElementRef<HTMLElement>;
+
+    constructor(protected plantService: PlantService, private activatedRoute: ActivatedRoute, protected qrGeneratorService: QRGeneratorService, private dialog: MatDialog, private router: Router) {}
 
     currentIdRoute: string = '';
     plant: any = {};
@@ -50,6 +55,23 @@ export class PlantCardComponent implements OnInit {
     ngOnInit(): void {
         this.currentIdRoute = this.activatedRoute.snapshot.url.map(segment => segment.path).join('/');
         this.plant = this.plantService.getPlantById(this.currentIdRoute).subscribe();
+    }
+
+    qrCode: QRCodeStyling | null = null;
+
+    openQrCodeDialog(event: Event) {
+        this.qrCode = this.qrGeneratorService.showQRCode(event, "10");
+        if(this.qrCode) {
+            this.dialog.open(QrGeneratorComponent, {
+                data: {
+                    qrCode: this.qrCode
+                }
+            })
+        }
+    }
+
+    goToHome() {
+        this.router.navigate(['/']);
     }
 
     getImagePath(): string {
