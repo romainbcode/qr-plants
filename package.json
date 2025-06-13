@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "github-deploy": "ng deploy --base-href=https://romainbcode.github.io/qr-plants/"
+    "github-deploy": "ng deploy --base-href=/qr-plants/"
   },
   "private": true,
   "dependencies": {
