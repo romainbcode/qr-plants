@@ -42,7 +42,7 @@ export class QRGeneratorService {
             width: 300,
             height: 300,
             data: url,
-            image: '/assets/plant-logo.png',
+            image: 'assets/plant-logo.png',
             dotsOptions: {
                 color: '#254026',
                 type: 'rounded',

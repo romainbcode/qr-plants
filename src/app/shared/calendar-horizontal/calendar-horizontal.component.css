@@ -54,7 +54,7 @@
   &::after {
     position: absolute;
     content: '';
-    background: url('/assets/droplet.png');
+    background: url('assets/droplet.png');
     position: absolute;
     bottom: 4px;
     left: 4px;

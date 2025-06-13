@@ -1,6 +1,5 @@
 import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { QRGeneratorService } from './qr-generator.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
