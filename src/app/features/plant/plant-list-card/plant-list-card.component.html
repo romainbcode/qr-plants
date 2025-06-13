@@ -4,17 +4,12 @@
         <div class="position-absolute top-0 start-50 translate-middle">
             <app-badge-status [etat]="etat"></app-badge-status>
         </div>
-        <div ngbDropdown (click)="$event.stopPropagation()">
-            <button type="button" class="btn btn-sm m-0 p-0" id="dropdownBasic1" aria-expanded="false" ngbDropdownToggle>
-                <lucide-icon [name]="EllipsisVertical"></lucide-icon>
-            </button>
-            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                <button ngbDropdownItem>Voir la plante</button>
-                <button ngbDropdownItem>Arroser la planten</button>
-                <div class="dropdown-divider"></div>
-                <button ngbDropdownItem>Supprimer la plante</button>
-            </div>
-        </div>
+        
+        <p-menu #menu [popup]="true" [model]="menuItems" appendTo="body"></p-menu>
+
+        <button type="button" class="btn btn-sm m-0 p-0" (click)="toggleMenu(menu, $event)">
+        <lucide-icon [name]="EllipsisVertical"></lucide-icon>
+        </button>
     </div>
     <div class="d-flex justify-content-center">
         <img [src]="getImagePath()" alt="Mon image" class="plant-image">

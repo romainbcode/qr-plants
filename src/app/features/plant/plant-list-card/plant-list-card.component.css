@@ -21,3 +21,18 @@ button[ngbDropdownToggle]:focus {
 .plant-card:hover .plant-image {
   transform: scale(1.05) !important;
 }
+
+.dropdown-item {
+  padding: 1;
+}
+
+::ng-deep .p-menu-list {
+  margin-bottom: 0;
+  padding-left: 0;
+}
+
+::ng-deep .p-menuitem-link{
+  color: black;
+  text-decoration: none ;
+  border: none;
+}
