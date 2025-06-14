@@ -1,0 +1,27 @@
+.cancel-button{
+    border-radius: 5px;
+    border: 1.5px solid rgb(214, 214, 214);
+    color: rgb(90, 90, 90);
+    background-color: white;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.delete-button{
+    border-radius: 5px;
+    border: none;
+    color: rgb(255, 255, 255);
+    background-color: rgb(191, 56, 56);
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 15px;
+}

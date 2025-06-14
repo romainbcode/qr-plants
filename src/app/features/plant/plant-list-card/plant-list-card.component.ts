@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, inject, Input } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { BadgeStatus } from "../../../shared/badge/badge-status/badge-status.component";
 import { EllipsisVertical, Eye, LucideAngularModule } from "lucide-angular";
@@ -10,18 +10,22 @@ import { BadgeDifficultyComponent } from "../../../shared/badge/badge-difficulty
 import { MenuItem } from "primeng/api";
 import { ButtonModule } from "primeng/button";
 import { MenuModule } from 'primeng/menu';
+import { MatDialog, MatDialogModule } from "@angular/material/dialog";
+import { DialogConfirmationDeleteComponent } from "../../../shared/dialog/dialog-confirmation-delete/dialog-confirmation-delete.component";
 
 @Component({
     selector: 'app-plant-list-card',
     standalone: true,
     imports: [CommonModule, BadgeStatus, LucideAngularModule, 
         PlantCardTemperatureComponent, PlantCardExpositionComponent, PlantCardHumidityComponent, NgbDropdownModule,
-        BadgeDifficultyComponent, ButtonModule, MenuModule
+        BadgeDifficultyComponent, ButtonModule, MenuModule, MatDialogModule
     ],
     templateUrl: './plant-list-card.component.html',
     styleUrl: './plant-list-card.component.css'
 })
 export class PlantListCardComponent{
+  readonly dialog = inject(MatDialog);
+
     @Input() temperature: number = 0;
     @Input() exposition: number = 0;
     @Input() humidity: number = 0;
@@ -56,7 +60,7 @@ export class PlantListCardComponent{
     {
       label: 'Supprimer la plante',
       icon: 'pi pi-trash',
-      command: () => this.supprimerPlante()
+      command: () => this.deletePlant(10)
     }
   ];
 
@@ -68,8 +72,14 @@ export class PlantListCardComponent{
     // Ton action ici
   }
 
-  supprimerPlante() {
-    // Ton action ici
+  deletePlant(id: number): void {
+    const dialogRef = this.dialog.open(DialogConfirmationDeleteComponent, {
+      width: '500px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) console.log(id + " Plante supprimé");//this.consultationService.deleteConsultationById(id).subscribe();
+    });
   }
 
     getImagePath(): string {
