@@ -1,9 +1,15 @@
 <div class="page-container d-flex flex-column mx-2 my-2">
-    <div class="d-flex justify-content-center mb-2">
+    <div class="d-flex justify-content-center position-relative">
         <h1 class="fw-bold">Mes plantes</h1>
+        <div class="position-absolute top-0 end-0 h-100">
+            <div class="d-flex flex-row h-100 gap-2">
+                <lucide-icon [name]="Plus" class="h-100" (click)="openGenerateQRCode()"></lucide-icon>
+                <lucide-icon [name]="QrCode" class="h-100" (click)="openQrCodeDialog($event)"></lucide-icon>
+            </div>
+        </div>
     </div>
     
-    <div class="overflow-auto">
+    <div class="overflow-auto mt-2">
         <div class="d-grid gap-2" style="grid-template-columns: repeat(2, 1fr); ">
             <app-plant-list-card
                 *ngFor="let plant of plants"
@@ -15,9 +21,5 @@
                 >
             </app-plant-list-card>
         </div>
-    </div>
-    
-    <div class="my-4 d-flex justify-content-center">
-        <app-plant-button-add></app-plant-button-add>
     </div>
 </div>

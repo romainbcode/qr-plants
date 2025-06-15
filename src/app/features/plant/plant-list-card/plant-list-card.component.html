@@ -4,11 +4,9 @@
         <div class="position-absolute top-0 start-50 translate-middle">
             <app-badge-status [etat]="etat"></app-badge-status>
         </div>
-        
         <p-menu #menu [popup]="true" [model]="menuItems" appendTo="body"></p-menu>
-
         <button type="button" class="btn btn-sm m-0 p-0" (click)="toggleMenu(menu, $event)">
-        <lucide-icon [name]="EllipsisVertical"></lucide-icon>
+            <lucide-icon [name]="EllipsisVertical"></lucide-icon>
         </button>
     </div>
     <div class="d-flex justify-content-center">

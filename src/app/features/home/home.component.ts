@@ -9,16 +9,24 @@ import { PlantListCardComponent } from "../plant/plant-list-card/plant-list-card
 import { PlantButtonAddComponent } from "../plant/plant-button-add/plant-button-add.component";
 import { CommonModule } from "@angular/common";
 import { Router } from "@angular/router";
+import { LucideAngularModule, Plus, QrCode } from "lucide-angular";
+import QRCodeStyling from "qr-code-styling";
+import { QrGeneratorComponent } from "../../shared/qr-generator/qr-generator.component";
+import { QRGeneratorService } from "../../shared/qr-generator/qr-generator.service";
 
 @Component({
     selector: 'app-home',
     standalone: true,
-    imports: [CommonModule, MatDialogModule, PlantListCardComponent, PlantButtonAddComponent],
+    imports: [CommonModule, MatDialogModule, PlantListCardComponent, PlantButtonAddComponent, LucideAngularModule],
     templateUrl: './home.component.html',
     styleUrl: './home.component.css'
 })
 export class HomeComponent {
+  constructor(private router: Router, protected qrGeneratorService: QRGeneratorService) {}
+
   readonly dialog = inject(MatDialog);
+  protected readonly Plus = Plus;
+  protected readonly QrCode = QrCode;
 
   plants = [
     {
@@ -53,13 +61,24 @@ export class HomeComponent {
     }
   ];
 
-  constructor(private router: Router) {}
-
   openGenerateQRCode(): void {
     this.dialog.open(PlantFormComponent, {
       width: '500px',
     })
   }
+
+  qrCode: QRCodeStyling | null = null;
+
+  openQrCodeDialog(event: Event) {
+          this.qrCode = this.qrGeneratorService.showQRCode(event, "");
+          if(this.qrCode) {
+              this.dialog.open(QrGeneratorComponent, {
+                  data: {
+                      qrCode: this.qrCode
+                  }
+              })
+          }
+      }
 
   goToPlant(id: number): void {
     this.router.navigate([`/$id`])

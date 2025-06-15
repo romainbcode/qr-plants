@@ -8,7 +8,7 @@ import { BadgeStatus } from "../../../shared/badge/badge-status/badge-status.com
 import { PlantCardTemperatureComponent } from "../plant-card-temperature/plant-card-temperature.component";
 import { PlantCardExpositionComponent } from "../plant-card-light/plant-card-exposition.component";
 import { PlantCardHumidityComponent } from "../plant-card-humidity/plant-card-humidity.component";
-import { Calendar, House, LucideAngularModule, QrCode } from "lucide-angular";
+import { Calendar, ChevronLeft, House, LucideAngularModule, QrCode } from "lucide-angular";
 import { CalendarComponent } from "../../../shared/calendar/calendar.component";
 import { CalendarHorizontalComponent } from "../../../shared/calendar-horizontal/calendar-horizontal.component";
 import { QRGeneratorService } from "../../../shared/qr-generator/qr-generator.service";
@@ -45,7 +45,7 @@ export class PlantCardComponent implements OnInit {
     date: Date | undefined;
 
     protected readonly QrCode = QrCode;
-    protected readonly House = House;
+    protected readonly ChevronLeft  = ChevronLeft;
     protected readonly Calendar = Calendar;
 
     selectTab(tab: string) {

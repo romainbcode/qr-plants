@@ -36,8 +36,12 @@ export class QRGeneratorService {
     
         //const baseUrl = 'https://romainbode.github.io/qr-plants';
         const baseUrl = 'http://localhost:4200';
-        const url = `${baseUrl}/${id}`;
-
+        let url = "";
+        if(id === "" || id === null) {
+            url = `${baseUrl}`;
+        } else {
+            url = `${baseUrl}/${id}`;
+        }
         return new QRCodeStyling({
             width: 300,
             height: 300,

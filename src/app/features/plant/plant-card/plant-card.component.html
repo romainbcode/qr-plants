@@ -1,6 +1,6 @@
 <div class="d-flex flex-column justify-content-between mx-2" style="height: 100svh;">
     <div class="d-flex justify-content-between mb-2 p-2 align-items-center">
-        <lucide-icon [name]="House" (click)="goToHome()"></lucide-icon>
+        <lucide-icon [name]="ChevronLeft" (click)="goToHome()"></lucide-icon>
         <span class="fw-bold" style="font-size: 22px;">{{ title }}</span>
         <app-badge-status [etat]="etat"></app-badge-status>
         <lucide-icon [name]="QrCode" (click)="openQrCodeDialog($event)"></lucide-icon>
