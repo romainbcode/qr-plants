@@ -38,5 +38,12 @@ export class PlantService {
             name: "Plante 2",
         })
     }
+
+    createPlant(plant: any) {
+
+    /*return this.httpClient
+      .request('POST', '/animal', { body: createAnimalDto })
+      .pipe(mergeMap(() => this.reloadAnimaux()));*/
+  }
 }
   

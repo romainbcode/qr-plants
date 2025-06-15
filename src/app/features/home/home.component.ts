@@ -13,6 +13,7 @@ import { LucideAngularModule, Plus, QrCode } from "lucide-angular";
 import QRCodeStyling from "qr-code-styling";
 import { QrGeneratorComponent } from "../../shared/dialog/dialog-qrcode/dialog-qrcode.component";
 import { QRGeneratorService } from "../../shared/dialog/dialog-qrcode/dialog-qrcode.service";
+import { DialogConfirmationValidateComponent } from "../../shared/dialog/dialog-confirmation-create/dialog-confirmation-create.component";
 
 @Component({
     selector: 'app-home',
@@ -62,7 +63,7 @@ export class HomeComponent {
   ];
 
   openGenerateQRCode(): void {
-    this.dialog.open(PlantFormComponent, {
+    this.dialog.open(DialogConfirmationValidateComponent, {
       width: '500px',
     })
   }
