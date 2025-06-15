@@ -15,8 +15,8 @@ export class QRGeneratorService {
         const url = `${baseUrl}/${id}`;
 
         return new QRCodeStyling({
-            width: 300,
-            height: 300,
+            width: 200,
+            height: 200,
             data: url,
             image: '/assets/plant-logo.png',
             dotsOptions: {
@@ -43,18 +43,12 @@ export class QRGeneratorService {
             url = `${baseUrl}/${id}`;
         }
         return new QRCodeStyling({
-            width: 300,
-            height: 300,
+            width: 150,
+            height: 150,
             data: url,
-            image: 'assets/plant-logo.png',
             dotsOptions: {
-                color: '#254026',
+                color: '#000',
                 type: 'rounded',
-            },
-            imageOptions: {
-                crossOrigin: 'anonymous',
-                imageSize: 0.75,
-                margin: 5
             },
         });
     }

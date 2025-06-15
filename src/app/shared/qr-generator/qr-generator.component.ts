@@ -1,17 +1,23 @@
-import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, ElementRef, inject, Inject, ViewChild } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { LucideAngularModule, Printer } from 'lucide-angular';
 
 @Component({
   selector: 'app-qr-code-popup',
   standalone: true,
-  imports: [CommonModule],
-  templateUrl: './qr-generator.component.html'
+  imports: [CommonModule, MatButtonModule, MatDialogActions, MatDialogContent, MatDialogTitle, MatDialogClose, LucideAngularModule],
+  templateUrl: './qr-generator.component.html',
+  styleUrl: './qr-generator.component.css'
 })
 export class QrGeneratorComponent {
+  readonly dialogRef = inject(MatDialogRef<QrGeneratorComponent>);
   @ViewChild('qrContainer', { static: false }) qrContainer!: ElementRef<HTMLElement>;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: { qrCode: any}) {}
+
+  protected readonly Printer = Printer;
   
   ngAfterViewInit() {
     setTimeout(() => {
@@ -21,6 +27,15 @@ export class QrGeneratorComponent {
           this.data.qrCode.append(containerEl);
         }
       }, 0);
+  }
+
+  cancel(): void {
+    this.dialogRef.close(false);
+  }
+
+  confirm(): void {
+    window.print();
+    this.dialogRef.close(true);
   }
 
 }
