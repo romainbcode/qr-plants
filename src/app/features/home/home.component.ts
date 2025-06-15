@@ -11,8 +11,8 @@ import { CommonModule } from "@angular/common";
 import { Router } from "@angular/router";
 import { LucideAngularModule, Plus, QrCode } from "lucide-angular";
 import QRCodeStyling from "qr-code-styling";
-import { QrGeneratorComponent } from "../../shared/qr-generator/qr-generator.component";
-import { QRGeneratorService } from "../../shared/qr-generator/qr-generator.service";
+import { QrGeneratorComponent } from "../../shared/dialog/dialog-qrcode/dialog-qrcode.component";
+import { QRGeneratorService } from "../../shared/dialog/dialog-qrcode/dialog-qrcode.service";
 
 @Component({
     selector: 'app-home',

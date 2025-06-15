@@ -11,9 +11,9 @@ import { PlantCardHumidityComponent } from "../plant-card-humidity/plant-card-hu
 import { Calendar, ChevronLeft, House, LucideAngularModule, QrCode } from "lucide-angular";
 import { CalendarComponent } from "../../../shared/calendar/calendar.component";
 import { CalendarHorizontalComponent } from "../../../shared/calendar-horizontal/calendar-horizontal.component";
-import { QRGeneratorService } from "../../../shared/qr-generator/qr-generator.service";
 import QRCodeStyling from "qr-code-styling";
-import { QrGeneratorComponent } from "../../../shared/qr-generator/qr-generator.component";
+import { QrGeneratorComponent } from "../../../shared/dialog/dialog-qrcode/dialog-qrcode.component";
+import { QRGeneratorService } from "../../../shared/dialog/dialog-qrcode/dialog-qrcode.service";
 
 @Component({
     selector: 'app-plant-card',

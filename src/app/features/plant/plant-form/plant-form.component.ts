@@ -4,7 +4,7 @@ import { PlantService } from "../plant.service";
 import { CommonModule } from "@angular/common";
 import { MatDialogModule } from "@angular/material/dialog";
 import QRCodeStyling from "qr-code-styling";
-import { QRGeneratorService } from "../../../shared/qr-generator/qr-generator.service";
+import { QRGeneratorService } from "../../../shared/dialog/dialog-qrcode/dialog-qrcode.service";
 @Component({
     selector: 'app-plant-form',
     standalone: true,

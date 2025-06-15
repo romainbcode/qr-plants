@@ -8,8 +8,8 @@ import { LucideAngularModule, Printer } from 'lucide-angular';
   selector: 'app-qr-code-popup',
   standalone: true,
   imports: [CommonModule, MatButtonModule, MatDialogActions, MatDialogContent, MatDialogTitle, MatDialogClose, LucideAngularModule],
-  templateUrl: './qr-generator.component.html',
-  styleUrl: './qr-generator.component.css'
+  templateUrl: './dialog-qrcode.component.html',
+  styleUrl: './dialog-qrcode.component.css'
 })
 export class QrGeneratorComponent {
   readonly dialogRef = inject(MatDialogRef<QrGeneratorComponent>);
