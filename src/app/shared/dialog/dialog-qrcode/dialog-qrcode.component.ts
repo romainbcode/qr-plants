@@ -15,7 +15,7 @@ export class QrGeneratorComponent {
   readonly dialogRef = inject(MatDialogRef<QrGeneratorComponent>);
   @ViewChild('qrContainer', { static: false }) qrContainer!: ElementRef<HTMLElement>;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { qrCode: any}) {}
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { qrCode: any, isGlobal: boolean}) {}
 
   protected readonly Printer = Printer;
   

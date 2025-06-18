@@ -64,7 +64,8 @@ export class PlantCardComponent implements OnInit {
         if(this.qrCode) {
             this.dialog.open(QrGeneratorComponent, {
                 data: {
-                    qrCode: this.qrCode
+                    qrCode: this.qrCode,
+                    isGlobal: false
                 }
             })
         }
