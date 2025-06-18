@@ -31,31 +31,37 @@ export class HomeComponent {
 
   plants = [
     {
+      id: 1,
       temperature: 22,
       exposition: 65,
       humidity: 60
     },
     {
+      id: 2,
       temperature: 18,
       exposition: 50,
       humidity: 70
     },
     {
+      id: 3,
       temperature: 25,
       exposition: 40,
       humidity: 80
     },
     {
+      id: 4,
       temperature: 22,
       exposition: 80,
       humidity: 60
     },
     {
+      id: 5,
       temperature: 18,
       exposition: 50,
       humidity: 70
     },
     {
+      id: 6,
       temperature: 25,
       exposition: 40,
       humidity: 80
@@ -82,6 +88,6 @@ export class HomeComponent {
       }
 
   goToPlant(id: number): void {
-    this.router.navigate([`/$id`])
+    this.router.navigate([`/${id}`])
   }
 }

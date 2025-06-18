@@ -12,6 +12,7 @@ import { ButtonModule } from "primeng/button";
 import { MenuModule } from 'primeng/menu';
 import { MatDialog, MatDialogModule } from "@angular/material/dialog";
 import { DialogConfirmationDeleteComponent } from "../../../shared/dialog/dialog-confirmation-delete/dialog-confirmation-delete.component";
+import { Router } from "@angular/router";
 
 @Component({
     selector: 'app-plant-list-card',
@@ -24,18 +25,43 @@ import { DialogConfirmationDeleteComponent } from "../../../shared/dialog/dialog
     styleUrl: './plant-list-card.component.css'
 })
 export class PlantListCardComponent{
+  constructor(protected router: Router) {}
+  
   readonly dialog = inject(MatDialog);
 
     @Input() temperature: number = 0;
     @Input() exposition: number = 0;
     @Input() humidity: number = 0;
+    @Input() plantId: number = 0;
 
     etat: string = 'Hydraté';
 
     title: string = 'Monstera';
+    
 
     protected readonly EllipsisVertical = EllipsisVertical;
     protected readonly Eye = Eye;
+
+    menuItems: MenuItem[] = [
+      {
+        label: 'Voir la plante',
+        icon: 'pi pi-eye',
+        command: () => this.goToPlant(this.plantId)
+      },
+      {
+        label: 'Arroser la plante',
+        icon: 'pi pi-refresh',
+        command: () => this.arroserPlante(this.plantId)
+      },
+      {
+        separator: true
+      },
+      {
+        label: 'Supprimer la plante',
+        icon: 'pi pi-trash',
+        command: () => this.deletePlant(this.plantId)
+      }
+    ];
 
     toggleMenu(menu: any, event: MouseEvent): void {
       event.stopPropagation();
@@ -43,32 +69,13 @@ export class PlantListCardComponent{
       menu.toggle(event);
     }
 
-    menuItems: MenuItem[] = [
-    {
-      label: 'Voir la plante',
-      icon: 'pi pi-eye',
-      command: () => this.voirPlante()
-    },
-    {
-      label: 'Arroser la plante',
-      icon: 'pi pi-refresh',
-      command: () => this.arroserPlante()
-    },
-    {
-      separator: true
-    },
-    {
-      label: 'Supprimer la plante',
-      icon: 'pi pi-trash',
-      command: () => this.deletePlant(10)
-    }
-  ];
+    
 
-  voirPlante() {
-    // Ton action ici
+  goToPlant(id: number) {
+    this.router.navigate([`/${id}`])
   }
 
-  arroserPlante() {
+  arroserPlante(id: number) {
     // Ton action ici
   }
 
