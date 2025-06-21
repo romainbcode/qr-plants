@@ -1,18 +1,16 @@
 import { CommonModule } from "@angular/common";
 import { Component, Input } from "@angular/core";
-import { LucideAngularModule, Star } from "lucide-angular";
 
 @Component({
     selector: 'app-badge-difficulty',
     standalone: true,
-    imports: [CommonModule, LucideAngularModule],
+    imports: [CommonModule],
     templateUrl: './badge-difficulty.component.html',
     styleUrl: './badge-difficulty.component.css'
 })
 export class BadgeDifficultyComponent{
     @Input() difficulty: number = 0;
-
-    protected readonly Star = Star;
+    @Input() isTitleDisplayed: boolean = true;
 
     getStars(): string[] {
         const stars = [];
