@@ -1,22 +1,25 @@
 <div class="py-4 px-3">
-    <lucide-icon [name]="Check" [strokeWidth]="3" class="d-flex justify-content-center fa-2xl mb-1" style="color: green"></lucide-icon>
+    <lucide-icon [name]="Leaf" [strokeWidth]="3" class="d-flex justify-content-center fa-2xl mb-1" style="color: green"></lucide-icon>
     <h2 mat-dialog-title class="d-flex justify-content-center align-items-center fw-bold pb-0">Ajouter une plante</h2>
     <mat-dialog-content style="font-size: 13px;" class="d-flex justify-content-center p-0 py-2">
-        <div class="form-group w-50">
-            <label for="name">Nom de la plante <span style="color: red;">*</span></label>
-            <ul class="list-group">
+        <div class="form-group w-100">
+            <ul class="list-group" style="max-height: 160px; overflow-y: auto;">
                 <li *ngFor="let plant of plantService.plants()"
-                    class="list-group-item"
+                    class="list-group-item d-flex flex-row gap-2 px-2"
                     [class.active]="plant.id === selectedPlantId"
-                    (click)="selectPlant(plant.id)">
-                {{ plant.name }}
+                    (click)="selectPlant(plant.id)"
+                >
+                    <app-badge-difficulty [isTitleDisplayed]="false" [difficulty]="plant.difficulty"></app-badge-difficulty>
+                    <app-badge-plant-unit [typeDisplayed]="plant.type"></app-badge-plant-unit>
+                    <div *ngIf="plant.type === 'plant'" style="margin-left: 3.5px;"></div>
+                    <span style="font-size: 12px;">{{ plant.name }}</span>
                 </li>
             </ul>
         </div>
     </mat-dialog-content>
     
     <mat-dialog-actions class="d-flex justify-content-evenly p-0 mt-2" style="min-height: 0px;">
-    <button class="cancel-button" (click)="cancel()">Non, annuler</button>
-    <button class="validate-button" (click)="confirm()">Oui, ajouter !</button>
+        <button class="cancel-button" (click)="cancel()">Non, annuler</button>
+        <button class="validate-button" (click)="confirm()">Oui, ajouter !</button>
     </mat-dialog-actions>
 </div>

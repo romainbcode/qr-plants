@@ -8,22 +8,25 @@ import {
   MatDialogTitle,
   MatDialogRef
 } from '@angular/material/dialog';
-import { Check, LucideAngularModule } from 'lucide-angular';
+import { Check, Leaf, LucideAngularModule } from 'lucide-angular';
 import { PlantService } from '../../../features/plant/plant.service';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { BadgeDifficultyComponent } from '../../badge/badge-difficulty/badge-difficulty.component';
+import { BadgePlantUnitComponent } from '../../badge/badge-plant-unit/badge-plant-unit.component';
 
 @Component({
-  selector: 'app-dialog-confirmation-validate',
+  selector: 'app-dialog-confirmation-create',
   standalone: true,
-  imports: [MatButtonModule, MatDialogActions, MatDialogContent, MatDialogTitle, MatDialogClose, LucideAngularModule, FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [MatButtonModule, MatDialogActions, MatDialogContent, MatDialogTitle, MatDialogClose, LucideAngularModule, 
+    FormsModule, ReactiveFormsModule, CommonModule, BadgeDifficultyComponent, BadgePlantUnitComponent],
   templateUrl: './dialog-confirmation-create.component.html',
   styleUrl: './dialog-confirmation-create.component.css'
 })
-export class DialogConfirmationValidateComponent {
+export class DialogConfirmationCreateComponent {
   constructor(protected plantService: PlantService) {}
-  readonly dialogRef = inject(MatDialogRef<DialogConfirmationValidateComponent>);
-  protected readonly Check = Check;
+  readonly dialogRef = inject(MatDialogRef<DialogConfirmationCreateComponent>);
+  protected readonly Leaf = Leaf;
 
   plantForm = new UntypedFormGroup({
     name: new UntypedFormControl('', [Validators.required]),
