@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
@@ -13,6 +13,7 @@ import { PrimeNGConfig } from 'primeng/api';
 })
 export class CalendarComponent {
   @Output() dateSelected = new EventEmitter<Date>();
+  @Input() date2: Date | undefined;
 
   date: Date | null = null;
 
@@ -22,6 +23,9 @@ export class CalendarComponent {
   constructor(private primengConfig: PrimeNGConfig) {}
 
   ngOnInit() {
+    if(this.date2) {
+      this.date = this.date2;
+    }
     this.primengConfig.setTranslation({
       firstDayOfWeek: 1,
       dayNames: ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"],
