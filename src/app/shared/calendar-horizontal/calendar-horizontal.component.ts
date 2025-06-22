@@ -16,6 +16,7 @@ export class CalendarHorizontalComponent implements OnInit, AfterViewInit {
   @Input() highlightedDates: string[] = [];
   days: { date: Date; number: number; letters: string }[] = [];
   todayIndex: number = 0;
+  plantName: string = 'Monstera';
   readonly dialog = inject(MatDialog);
 
   @ViewChild('scrollContainer') scrollContainer!: ElementRef;
@@ -101,7 +102,7 @@ export class CalendarHorizontalComponent implements OnInit, AfterViewInit {
     );
   }
 
-  waterPlant(date: Date) {
+  waterPlant(date: Date | null) {
     /*const dialogRef = this.dialog.open(DialogConfirmationValidateComponent  , {
       width: '500px',
       data: {
@@ -112,7 +113,9 @@ export class CalendarHorizontalComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) console.log(date + " Plante arrosé");
     });*/
-    this.router.navigate(['/watering/' + this.plantId], { queryParams: { date: date } });
+    if(date) {
+      this.router.navigate(['/watering/' + this.plantId], { queryParams: { name: this.plantName, date: date } });
+    }
   }
 
   

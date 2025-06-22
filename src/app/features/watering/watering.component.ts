@@ -49,6 +49,9 @@ export class WateringComponent {
     ngOnInit(): void {
         this.plantId = this.activatedRoute.snapshot.params['id'];
         this.plantName = this.activatedRoute.snapshot.queryParams['name'];
+        if(this.activatedRoute.snapshot.queryParams['date']) {
+            this.onDateSelected(new Date(this.activatedRoute.snapshot.queryParams['date']));
+        }
     }
 
     onDateSelected(date: Date) {

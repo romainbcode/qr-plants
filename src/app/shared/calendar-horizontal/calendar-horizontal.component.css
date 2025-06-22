@@ -1,7 +1,10 @@
 .calendar-horizontal-list {
   overflow-x: auto;
   white-space: nowrap;
-  padding: 0.5rem 0;
+  padding-top: 1rem;
+  padding-bottom: 0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
   margin: 0;
   scrollbar-width: thin;
   -ms-overflow-style: none;
@@ -31,7 +34,6 @@
   background-color: #f4f4f4;
   cursor: pointer;
   border: 1px solid #ffffff;
-  transition: background-color 0.2s;
 }
 
 .calendar-day-item:hover {
@@ -45,32 +47,29 @@
   padding: 5px;
 }
 
-.day-number.today {
-  background-color: rgb(122, 122, 240);
-  color: white;
-}
-
-.calendar-day-item.highlighted {
-  background-color: rgb(206, 206, 237);
+.calendar-day-item.today {
   position: relative;
 }
 
-.calendar-day-item.highlighted::after {
+.calendar-day-item.today::after {
   content: '';
-  background: url('/assets/droplet.png');
   position: absolute;
-  bottom: 4px;
-  left: 4px;
-  width: 15px;
-  height: 15px;
-  background-size: contain;
-  background-repeat: no-repeat;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgb(255, 0, 0);
+  z-index: 10;
+}
+
+.calendar-day-item.highlighted {
+  background-color: rgb(226, 226, 255);
 }
 
 .calendar-day-item.active {
-  background-color: #d0ebff;
-  color: #003366;
-  font-weight: bold;
+  border: 2px solid #a3a3a3;
 }
 
 .water-button{
@@ -80,9 +79,21 @@
     background-color: #5757b9;
     padding-left: 5%;
     padding-right: 5%;
-    padding-top: 5px;
+    margin: 5px;
     padding-bottom: 5px;
     text-align: center;
     font-weight: 600;
     font-size: 13px;
+}
+
+.enabled-button {
+  background-color: #2d2d7e !important;
+  color: white !important;
+  cursor: pointer !important;
+}
+
+.disabled-button {
+  background-color: #cccccc !important;
+  color: #949494 !important;
+  cursor: not-allowed !important;
 }

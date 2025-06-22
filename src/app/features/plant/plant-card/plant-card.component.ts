@@ -73,6 +73,10 @@ export class PlantCardComponent implements OnInit {
 
     goToHome() {
         this.router.navigate(['/']);
+    }   
+
+    goToCalendar() {
+        this.router.navigate(['/watering/' + this.plant.id]);
     }
 
     getImagePath(): string {

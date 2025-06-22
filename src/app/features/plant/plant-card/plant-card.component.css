@@ -28,5 +28,8 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 2px;
+  gap: 4px;
+  background-color: transparent;
+  line-height: 1;
 }
+
