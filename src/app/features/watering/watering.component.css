@@ -14,14 +14,12 @@
     background-color: #2d2d7e !important;
     color: white !important;
     cursor: pointer !important;
-    opacity: 1 !important;
 }
 
 .disabled-button {
     background-color: #cccccc !important;
-    color: #666666 !important;
+    color: #949494 !important;
     cursor: not-allowed !important;
-    opacity: 0.7 !important;
 }
 
 button:disabled {

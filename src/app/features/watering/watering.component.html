@@ -1,4 +1,4 @@
-<div class="d-flex flex-column mx-2" style="min-height: 100svh;">
+<div class="d-flex flex-column m-2" style="min-height: 100svh; padding-bottom: 70px;">
     <div class="d-flex align-items-center px-2 my-2">
         <lucide-icon [name]="X" (click)="goBack()" class="me-3" style="cursor:pointer;"></lucide-icon>
         <div class="text-center fw-bold" style="font-size: 22px;">
@@ -7,7 +7,9 @@
     </div>
 
     <div style="font-size: 14px; background-color: #d9e1f8; padding: 10px; border-radius: 8px; position: relative;">
-        <lucide-icon [name]="Info" style="position: absolute; top: -12px; left: 12px; color: rgb(140, 127, 253); padding: 3px; border-radius: 50%; width: 14px; height: 14px;"></lucide-icon>
+        <div style="position: absolute; top: -8px; left: 12px; background-color: white; border-radius: 50%; width: 20px; height: 20px;">
+            <lucide-icon [name]="Info" color="#8c7ffd" class="d-flex justify-content-center align-items-center" size="20"></lucide-icon>
+        </div>
         {{ wateringAdvice }}
     </div>
     <div class="my-2"></div>
