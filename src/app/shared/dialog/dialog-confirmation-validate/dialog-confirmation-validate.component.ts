@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Inject, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
-import { Droplets, LucideAngularModule } from 'lucide-angular';
+import { Droplets, LucideAngularModule, X } from 'lucide-angular';
 import { CalendarComponent } from "../../calendar/calendar.component";
 
 @Component({
@@ -16,7 +16,7 @@ export class DialogConfirmationValidateComponent {
   
   readonly dialogRef = inject(MatDialogRef<DialogConfirmationValidateComponent>);
   protected readonly Droplets = Droplets;
-
+  protected readonly X = X;
   constructor(@Inject(MAT_DIALOG_DATA) public data: { date: Date }) {}
 
   cancel(): void {

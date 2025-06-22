@@ -8,7 +8,7 @@ import {
   MatDialogTitle,
   MatDialogRef
 } from '@angular/material/dialog';
-import { Check, Leaf, LucideAngularModule } from 'lucide-angular';
+import { Check, Leaf, LucideAngularModule, X } from 'lucide-angular';
 import { PlantService } from '../../../features/plant/plant.service';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -27,8 +27,9 @@ export class DialogConfirmationCreateComponent {
   constructor(protected plantService: PlantService) {}
   readonly dialogRef = inject(MatDialogRef<DialogConfirmationCreateComponent>);
   protected readonly Leaf = Leaf;
+  protected readonly X = X;
 
-  plantForm = new UntypedFormGroup({
+  plantForm = new UntypedFormGroup({  
     name: new UntypedFormControl('', [Validators.required]),
   })
 

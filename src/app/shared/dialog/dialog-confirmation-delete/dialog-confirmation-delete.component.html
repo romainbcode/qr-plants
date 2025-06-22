@@ -1,8 +1,9 @@
-<div class="py-4 px-3">
+<div class="py-4 px-3" style="position: relative;">
+  <lucide-icon [name]="X" size="20" (click)="cancel()" class="d-flex justify-content-center align-items-center" style="position: absolute; top: 8px; right: 8px; color: #666; width: 20px; height: 20px;"></lucide-icon>
   <lucide-icon [name]="Trash" [strokeWidth]="3" class="d-flex justify-content-center fa-2xl mb-1" style="color: red"></lucide-icon>
   <h2 mat-dialog-title class="d-flex justify-content-center align-items-center fw-bold pb-0" style="font-size: 16px;">Supprimer cette plante</h2>
-  <mat-dialog-content style="font-size: 13px;" class="d-flex justify-content-center p-0 py-2">
-      Tu es sur le point de supprimer cette plante
+  <mat-dialog-content style="font-size: 13px;" class="d-flex justify-content-center align-items-center p-0 py-2">
+    Cette action est irréversible. Veux-tu vraiment supprimer cette plante ?
   </mat-dialog-content>
   <mat-dialog-actions class="d-flex flex-row justify-content-evenly p-0 mt-2" style="min-height: 0px;">
     <button class="cancel-button" (click)="cancel()">Non, annuler</button>

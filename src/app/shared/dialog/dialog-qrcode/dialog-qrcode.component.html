@@ -2,7 +2,8 @@
   <ng-template [ngTemplateOutlet]="globalTemplate"></ng-template>
 </ng-container>
 
-<ng-template #headerTemplate>
+<ng-template #headerTemplate class="position-relative">
+  <lucide-icon [name]="X" size="20" (click)="cancel()" class="d-flex justify-content-center align-items-center" style="position: absolute; top: 8px; right: 8px; color: #666; width: 20px; height: 20px;"></lucide-icon>
   <lucide-icon [name]="Printer" [strokeWidth]="3" class="d-flex justify-content-center mb-1 no-print" style="color: black"></lucide-icon>
   <h2 mat-dialog-title class="d-flex justify-content-center align-items-center fw-bold pb-0 no-print" style="font-size: 16px;">Imprimer ce QrCode</h2>
 </ng-template>
