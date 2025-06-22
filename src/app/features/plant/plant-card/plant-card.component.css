@@ -16,3 +16,17 @@
   width: 225px !important;
   height: 225px !important;
 }
+
+.calendar-button {
+  border: 1px solid #ebebeb;
+  color: black;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}

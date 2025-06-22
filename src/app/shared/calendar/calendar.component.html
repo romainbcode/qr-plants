@@ -4,5 +4,6 @@
   [inline]="true"
   [firstDayOfWeek]="firstDayOfWeek"
   showIcon="true"
-  placeholder="Sélectionnez une date">
+  placeholder="Sélectionnez une date"
+  (onSelect)="onDateSelect($event)">
 </p-calendar>

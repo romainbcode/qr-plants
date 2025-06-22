@@ -3,11 +3,12 @@ import { Component, Inject, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 import { Droplets, LucideAngularModule } from 'lucide-angular';
+import { CalendarComponent } from "../../calendar/calendar.component";
 
 @Component({
   selector: 'app-dialog-confirmation-validate',
   standalone: true,
-  imports: [MatButtonModule, MatDialogActions, MatDialogContent, MatDialogTitle, MatDialogClose, CommonModule, LucideAngularModule],
+  imports: [MatButtonModule, MatDialogActions, MatDialogContent, MatDialogTitle, MatDialogClose, CommonModule, LucideAngularModule, CalendarComponent],
   templateUrl: './dialog-confirmation-validate.component.html',
   styleUrl: './dialog-confirmation-validate.component.css'
 })

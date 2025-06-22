@@ -21,7 +21,7 @@
   min-width: 60px;
   height: 80px;
   margin-right: 8px;
-  border-radius: 8px;
+  border-radius: 20px;
   display: inline-flex;
   flex-direction: column;
   justify-content: space-between;
@@ -39,7 +39,7 @@
 }
 
 .day-number {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: bold;
   border-radius: 20%;
   padding: 5px;

@@ -8,8 +8,8 @@
       [class.active]="isSelected(day.date)"
       (click)="selectDate(day.date)"
     >
-      <div class="day-number" [class.today]="isToday(day.date)">{{ day.dayNumber }}</div>
-      <div class="day-initial">{{ day.dayInitial }}</div>
+      <div class="day-number" [class.today]="isToday(day.date)">{{ day.number }}</div>
+      <div class="day-initial">{{ day.letters }}</div>
     </li>
   </ul>
 

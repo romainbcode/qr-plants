@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
@@ -12,9 +12,12 @@ import { PrimeNGConfig } from 'primeng/api';
   styleUrl: './calendar.component.css'
 })
 export class CalendarComponent {
+  @Output() dateSelected = new EventEmitter<Date>();
+
   date: Date | null = null;
 
   firstDayOfWeek: number = 1;
+
 
   constructor(private primengConfig: PrimeNGConfig) {}
 
@@ -33,4 +36,9 @@ export class CalendarComponent {
     });
   }
 
+  onDateSelect(event: any) {
+    if (event) {
+      this.dateSelected.emit(event);
+    }
+  }
 }

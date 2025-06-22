@@ -1,0 +1,50 @@
+.watering-button {
+    background-color: #2d2d7e;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.calendar-icon-bg {
+    background-color: #e74c3c;   /* Couleur de fond */
+    color: white;                /* Couleur de l’icône */
+    padding: 8px;
+    border-radius: 50%;
+    font-size: 22px;
+    /* Pas de centrage, donc pas de display:flex ici */
+    margin-bottom: 8px;          /* Espace sous l’icône */
+    margin-right: 0;             /* Pas d’espace à droite */
+  }
+
+/* Réduction de la taille des numéros de jours */
+::ng-deep .p-datepicker-calendar-container td span {
+  width: 40px;
+  height: 35px;
+}
+
+/* Réduction de la taille des jours de la semaine */
+::ng-deep .p-datepicker-calendar-container th span {
+  display: flex;
+  justify-content: center;
+  width: 40px;
+  height: 35px;
+}
+
+::ng-deep .p-datepicker-header {
+  margin: 0;
+  padding: 0;
+}
+
+/* Réduction de la taille des icônes dans le header */
+::ng-deep .p-datepicker-header button .p-button-icon {
+  font-size: 8px !important;
+}
+
+ ::ng-deep .p-datepicker-inline {
+  padding-bottom: 0;
+  padding-top: 0;
+}

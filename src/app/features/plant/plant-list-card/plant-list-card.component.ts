@@ -77,13 +77,14 @@ export class PlantListCardComponent{
   }
 
   arroserPlante(id: number) {
-    const dialogRef = this.dialog.open(DialogConfirmationValidateComponent, {
+    /*const dialogRef = this.dialog.open(DialogConfirmationValidateComponent, {
       width: '500px'
     })
 
     dialogRef.afterClosed().subscribe(result => {
       if(result) console.log('plante arrosé')
-    })
+    })*/
+   this.router.navigate(['/watering/' + this.plantId], { queryParams: { name: this.title } });
   }
 
   deletePlant(id: number): void {

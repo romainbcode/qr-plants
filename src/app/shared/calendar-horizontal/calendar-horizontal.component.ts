@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, ElementRef, ViewChild, AfterViewInit, Input, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogConfirmationValidateComponent } from '../dialog/dialog-confirmation-validate/dialog-confirmation-validate.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-calendar-horizontal',
@@ -13,14 +14,16 @@ import { DialogConfirmationValidateComponent } from '../dialog/dialog-confirmati
 export class CalendarHorizontalComponent implements OnInit, AfterViewInit {
   @Input() plantId!: number;
   @Input() highlightedDates: string[] = [];
-  days: { date: Date; dayNumber: number; dayInitial: string }[] = [];
+  days: { date: Date; number: number; letters: string }[] = [];
   todayIndex: number = 0;
   readonly dialog = inject(MatDialog);
 
   @ViewChild('scrollContainer') scrollContainer!: ElementRef;
 
+  constructor(private router: Router) {}
+
   ngOnInit() {
-    const today = new Date();
+    const today = new Date(); 
     const year = today.getFullYear();
     const month = today.getMonth();
 
@@ -28,15 +31,17 @@ export class CalendarHorizontalComponent implements OnInit, AfterViewInit {
 
     for (let day = 1; day <= daysInMonth; day++) {
       const d = new Date(year, month, day);
-      const dayInitial = d
+      const letters = d
+        .toLocaleDateString('fr-FR', { weekday: 'narrow' })
+        .toUpperCase() + d
         .toLocaleDateString('fr-FR', { weekday: 'short' })
-        .charAt(0)
-        .toUpperCase();
+        .slice(1, 3)
+      
 
       this.days.push({
         date: d,
-        dayNumber: day,
-        dayInitial: dayInitial
+        number: day,
+        letters: letters
       });
 
       if (d.toDateString() === today.toDateString()) {
@@ -97,7 +102,7 @@ export class CalendarHorizontalComponent implements OnInit, AfterViewInit {
   }
 
   waterPlant(date: Date) {
-    const dialogRef = this.dialog.open(DialogConfirmationValidateComponent  , {
+    /*const dialogRef = this.dialog.open(DialogConfirmationValidateComponent  , {
       width: '500px',
       data: {
         date
@@ -106,7 +111,8 @@ export class CalendarHorizontalComponent implements OnInit, AfterViewInit {
   
     dialogRef.afterClosed().subscribe(result => {
       if (result) console.log(date + " Plante arrosé");
-    });
+    });*/
+    this.router.navigate(['/watering/' + this.plantId], { queryParams: { date: date } });
   }
 
   

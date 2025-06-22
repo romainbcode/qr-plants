@@ -1,12 +1,22 @@
 <div class="py-4 px-3">
     <lucide-icon [name]="Droplets" [strokeWidth]="3" class="d-flex justify-content-center fa-2xl mb-1" color="#2d2d7e"></lucide-icon>
     <h2 mat-dialog-title class="d-flex justify-content-center align-items-center fw-bold pb-0">Arroser une plante</h2>
-    <mat-dialog-content style="font-size: 13px;" class="d-flex justify-content-center p-0 py-2">
-      As-tu arrosé cette plante le {{ data.date | date:'dd/MM/yyyy' }} ?
-    </mat-dialog-content>
     
+    <ng-container *ngIf="data && data.date; else wateringTemplate">
+      <ng-template #confirmWateringTemplate></ng-template>
+    </ng-container>
     <mat-dialog-actions class="d-flex justify-content-evenly p-0 mt-2" style="min-height: 0px;">
         <button class="cancel-button" (click)="cancel()">Non, annuler</button>
         <button class="water-button" (click)="confirm()">Oui, confirmer !</button>
     </mat-dialog-actions>
 </div>
+
+<ng-template #confirmWateringTemplate>
+  <mat-dialog-content style="font-size: 13px;" class="d-flex justify-content-center p-0 py-2">
+    As-tu arrosé cette plante le {{ data.date | date:'dd/MM/yyyy' }} ?
+  </mat-dialog-content>
+</ng-template>
+
+<ng-template #wateringTemplate>
+  <app-calendar></app-calendar>
+</ng-template>
