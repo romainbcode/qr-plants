@@ -1,11 +1,18 @@
-<div class="calendar-strip" #scrollContainer>
-  <div
-    class="day-box"
-    *ngFor="let day of days"
-    [class.today]="isToday(day.date)"
-    [class.highlighted]="isHighlighted(day.date)"
-  >
-    <div class="day-number">{{ day.dayNumber }}</div>
-    <div class="day-initial">{{ day.dayInitial }}</div>
-  </div>
+<div class="w-100">
+  <ul class="calendar-horizontal-list d-flex flex-row flex-nowrap" #scrollContainer>
+    <li
+      *ngFor="let day of days"
+      class="calendar-day-item text-center"
+      
+      [class.highlighted]="isHighlighted(day.date)"
+      [class.active]="isSelected(day.date)"
+      (click)="selectDate(day.date)"
+    >
+      <div class="day-number" [class.today]="isToday(day.date)">{{ day.dayNumber }}</div>
+      <div class="day-initial">{{ day.dayInitial }}</div>
+    </li>
+  </ul>
+
+  <button *ngIf="selectedDate" class="water-button" (click)="waterPlant(selectedDate)">Arroser</button>
 </div>
+

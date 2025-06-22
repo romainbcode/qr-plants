@@ -13,6 +13,7 @@ import { MenuModule } from 'primeng/menu';
 import { MatDialog, MatDialogModule } from "@angular/material/dialog";
 import { DialogConfirmationDeleteComponent } from "../../../shared/dialog/dialog-confirmation-delete/dialog-confirmation-delete.component";
 import { Router } from "@angular/router";
+import { DialogConfirmationValidateComponent } from "../../../shared/dialog/dialog-confirmation-validate/dialog-confirmation-validate.component";
 
 @Component({
     selector: 'app-plant-list-card',
@@ -76,7 +77,13 @@ export class PlantListCardComponent{
   }
 
   arroserPlante(id: number) {
-    // Ton action ici
+    const dialogRef = this.dialog.open(DialogConfirmationValidateComponent, {
+      width: '500px'
+    })
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) console.log('plante arrosé')
+    })
   }
 
   deletePlant(id: number): void {

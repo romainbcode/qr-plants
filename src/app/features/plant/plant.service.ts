@@ -24,10 +24,38 @@ export class PlantService {
             {
                 id: 1,
                 name: "Plante 1",
+                difficulty: 2,
+                type: "bean"
             },
             {
                 id: 2,
                 name: "Plante 2",
+                difficulty: 3,
+                type: "plant"
+            },
+            {
+                id: 3,
+                name: "Plante 1",
+                difficulty: 2,
+                type: "bean"
+            },
+            {
+                id: 4,
+                name: "Plante 2",
+                difficulty: 3,
+                type: "plant"
+            },
+            {
+                id: 5,
+                name: "Plante 1",
+                difficulty: 2,
+                type: "bean"
+            },
+            {
+                id: 6,
+                name: "Plante 2",
+                difficulty: 3,
+                type: "plant"
             }
         ])
     }

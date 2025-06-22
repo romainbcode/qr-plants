@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ElementRef, ViewChild, AfterViewInit, Input } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, AfterViewInit, Input, inject } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogConfirmationValidateComponent } from '../dialog/dialog-confirmation-validate/dialog-confirmation-validate.component';
 
 @Component({
   selector: 'app-calendar-horizontal',
@@ -9,9 +11,11 @@ import { Component, OnInit, ElementRef, ViewChild, AfterViewInit, Input } from '
   styleUrls: ['./calendar-horizontal.component.css']
 })
 export class CalendarHorizontalComponent implements OnInit, AfterViewInit {
-@Input() highlightedDates: string[] = [];
+  @Input() plantId!: number;
+  @Input() highlightedDates: string[] = [];
   days: { date: Date; dayNumber: number; dayInitial: string }[] = [];
   todayIndex: number = 0;
+  readonly dialog = inject(MatDialog);
 
   @ViewChild('scrollContainer') scrollContainer!: ElementRef;
 
@@ -53,6 +57,12 @@ export class CalendarHorizontalComponent implements OnInit, AfterViewInit {
 
   isToday(date: Date): boolean {
     const now = new Date();
+    if(date.getDate() === now.getDate() &&
+      date.getMonth() === now.getMonth() &&
+      date.getFullYear() === now.getFullYear()) {
+        console.log(date)
+      }
+   
     return (
       date.getDate() === now.getDate() &&
       date.getMonth() === now.getMonth() &&
@@ -71,4 +81,34 @@ export class CalendarHorizontalComponent implements OnInit, AfterViewInit {
     const dateStr = this.formatDateToInput(date);
     return this.highlightedDates.includes(dateStr);
   }
+
+  selectedDate: Date | null = null;
+
+  selectDate(date: Date) {
+    this.selectedDate = date;
+  }
+
+  isSelected(date: Date): boolean {
+    return (
+      this.selectedDate?.getDate() === date.getDate() &&
+      this.selectedDate?.getMonth() === date.getMonth() &&
+      this.selectedDate?.getFullYear() === date.getFullYear()
+    );
+  }
+
+  waterPlant(date: Date) {
+    const dialogRef = this.dialog.open(DialogConfirmationValidateComponent  , {
+      width: '500px',
+      data: {
+        date
+      }
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) console.log(date + " Plante arrosé");
+    });
+  }
+
+  
+
 }

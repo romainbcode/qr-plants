@@ -1,66 +1,88 @@
-.calendar-strip {
-  display: flex;
+.calendar-horizontal-list {
   overflow-x: auto;
   white-space: nowrap;
-  padding: 0.5rem;
-  scroll-behavior: smooth;
-  border-radius: 8px;
-
-  scrollbar-width: none;
+  padding: 0.5rem 0;
+  margin: 0;
+  scrollbar-width: thin;
   -ms-overflow-style: none;
 
   &::-webkit-scrollbar {
-    display: none;
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 4px;
   }
 }
 
-
-.day-box {
+.calendar-day-item {
   width: 60px;
   min-width: 60px;
   height: 80px;
   margin-right: 8px;
-  text-align: center;
   border-radius: 8px;
-  padding: 0.5rem 0;
-  flex-shrink: 0;
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
   font-weight: 500;
-  background-color: #f9f9f9;
+  background-color: #f4f4f4;
+  cursor: pointer;
+  border: 1px solid #ffffff;
+  transition: background-color 0.2s;
 }
 
-.day-box.today {
-  border: 2px solid #dbdbdb;
+.calendar-day-item:hover {
+  background-color: #ececec;
 }
 
 .day-number {
-  font-size: 18px;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 20%;
+  padding: 5px;
+}
+
+.day-number.today {
+  background-color: rgb(122, 122, 240);
+  color: white;
+}
+
+.calendar-day-item.highlighted {
+  background-color: rgb(206, 206, 237);
+  position: relative;
+}
+
+.calendar-day-item.highlighted::after {
+  content: '';
+  background: url('/assets/droplet.png');
+  position: absolute;
+  bottom: 4px;
+  left: 4px;
+  width: 15px;
+  height: 15px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.calendar-day-item.active {
+  background-color: #d0ebff;
+  color: #003366;
   font-weight: bold;
 }
 
-.day-initial {
-  font-size: 16px;
-  color: #666;
-}
-
-.day-box.highlighted {
-  font-weight: 700;
-  color: #333;
-  position: relative;
-  background-color: rgb(206, 206, 237);
-
-  &::after {
-    position: absolute;
-    content: '';
-    background: url('/assets/droplet.png');
-    position: absolute;
-    bottom: 4px;
-    left: 4px;
-    width: 15px;
-    height: 15px;
-    background-size: contain;
-    background-repeat: no-repeat;
-  }
+.water-button{
+    border-radius: 5px;
+    border: none;
+    color: rgb(255, 255, 255);
+    background-color: #5757b9;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 13px;
 }
