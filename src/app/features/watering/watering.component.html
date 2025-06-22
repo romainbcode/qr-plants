@@ -1,12 +1,12 @@
 <div class="d-flex flex-column m-2" style="min-height: 100svh; padding-bottom: 70px;">
-    <div class="d-flex align-items-center px-2 my-2">
-        <lucide-icon [name]="X" (click)="goBack()" class="me-3" style="cursor:pointer;"></lucide-icon>
+    <div class="d-flex align-items-center py-2 w-100" style="position: fixed; top: 0px; left: 0px; right: 0px; z-index: 1000; background-color: #f9f9f9;"  >
+        <lucide-icon [name]="X" (click)="goBack()" class="mx-2" style="cursor:pointer;"></lucide-icon>
         <div class="text-center fw-bold" style="font-size: 22px;">
             Arrosage de {{ plantName }}
         </div>
     </div>
 
-    <div style="font-size: 14px; background-color: #d9e1f8; padding: 10px; border-radius: 8px; position: relative;">
+    <div style="font-size: 14px; background-color: #d9e1f8; padding: 10px; border-radius: 8px; position: relative;  margin-top: 50px;">
         <div style="position: absolute; top: -8px; left: 12px; background-color: white; border-radius: 50%; width: 20px; height: 20px;">
             <lucide-icon [name]="Info" color="#8c7ffd" class="d-flex justify-content-center align-items-center" size="20"></lucide-icon>
         </div>
