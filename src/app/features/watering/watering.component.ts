@@ -22,6 +22,7 @@ export class WateringComponent {
     protected readonly Calendar = Calendar;
     protected readonly CalendarSync = CalendarSync;
     protected readonly Info = Info;
+    dateSelected: Date | undefined;
     plantId: number = 0;
     plantName: string = 'Plante';
     wateringAdvices: string[] = [
@@ -51,6 +52,7 @@ export class WateringComponent {
     }
 
     onDateSelected(date: Date) {
+        this.dateSelected = date;
         console.log(date);
     }
 

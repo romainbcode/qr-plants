@@ -7,17 +7,36 @@
     cursor: pointer;
     font-size: 16px;
     font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.enabled-button {
+    background-color: #2d2d7e !important;
+    color: white !important;
+    cursor: pointer !important;
+    opacity: 1 !important;
+}
+
+.disabled-button {
+    background-color: #cccccc !important;
+    color: #666666 !important;
+    cursor: not-allowed !important;
+    opacity: 0.7 !important;
+}
+
+button:disabled {
+    pointer-events: none;
 }
 
 .calendar-icon-bg {
     background-color: #e74c3c;   /* Couleur de fond */
-    color: white;                /* Couleur de l’icône */
+    color: white;                /* Couleur de l'icône */
     padding: 8px;
     border-radius: 50%;
     font-size: 22px;
     /* Pas de centrage, donc pas de display:flex ici */
-    margin-bottom: 8px;          /* Espace sous l’icône */
-    margin-right: 0;             /* Pas d’espace à droite */
+    margin-bottom: 8px;          /* Espace sous l'icône */
+    margin-right: 0;             /* Pas d'espace à droite */
   }
 
 /* Réduction de la taille des numéros de jours */
