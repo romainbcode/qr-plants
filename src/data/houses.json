@@ -1,0 +1,12 @@
+[
+    {
+      "id": 1,
+      "nom": "Appartement 12B",
+      "plantes": [
+        {
+          "plantId": 101,
+          "datesArrosage": ["2024-06-01", "2024-06-10"]
+        }
+      ]
+    }
+  ]

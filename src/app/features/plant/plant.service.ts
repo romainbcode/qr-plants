@@ -1,5 +1,6 @@
 import { Injectable, signal } from "@angular/core";
-import { Observable, of, tap } from "rxjs";
+import { from, Observable, of, tap } from "rxjs";
+import { SupabaseService } from "../../supabase.service";
 
 @Injectable({
     providedIn: 'root',
@@ -7,19 +8,19 @@ import { Observable, of, tap } from "rxjs";
 export class PlantService {
     plants = signal<any[]>([]);
 
-    constructor() {
+    constructor(private supabaseService: SupabaseService) {
         this.reloadPlants().subscribe();
     }
 
     reloadPlants(): Observable<any[]> {
         return this.getPlants().pipe(
-            tap((plants) => {
+            tap(plants => {
                 this.plants.set(plants);
             })
-        )
+        );
     }
 
-    getPlants(): Observable<any[]> {
+    /*getPlants(): Observable<any[]> {
         return of([
             {
                 id: 1,
@@ -58,7 +59,30 @@ export class PlantService {
                 type: "plant"
             }
         ])
+    }*/
+
+    getPlants(): Observable<any[]> {
+        return from(
+            this.supabaseService.client
+                .from('plantes')
+                .select('*')
+                .then(({ data, error }) => {
+                    if (error) {
+                        console.error('Erreur Supabase:', error);
+                        throw error;
+                    }
+                    
+                    // Transformer les données pour correspondre à l'interface Plant
+                    return data?.map(plant => ({
+                        id: plant.id,
+                        name: plant.nom,
+                        difficulty: plant.difficulte || 1,
+                        //type: this.getPlantType(plant.nom) // Fonction pour déterminer le type
+                    })) || [];
+                })
+        );
     }
+    
 
     getPlantById(id: string): Observable<any> {
         return of({

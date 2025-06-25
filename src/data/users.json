@@ -1,0 +1,12 @@
+[
+    {
+      "identifiant": 1,
+      "prenom": "Alice",
+      "logementId": 1
+    },
+    {
+      "identifiant": 2,
+      "prenom": "Bob",
+      "logementId": 1
+    }
+]

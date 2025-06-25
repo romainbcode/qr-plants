@@ -1,4 +1,4 @@
-import { Component, inject } from "@angular/core";
+import { Component, inject, OnInit } from "@angular/core";
 import {
   MatDialog,
   MatDialogModule,
@@ -14,6 +14,7 @@ import QRCodeStyling from "qr-code-styling";
 import { QrGeneratorComponent } from "../../shared/dialog/dialog-qrcode/dialog-qrcode.component";
 import { QRGeneratorService } from "../../shared/dialog/dialog-qrcode/dialog-qrcode.service";
 import { DialogConfirmationCreateComponent } from "../../shared/dialog/dialog-confirmation-create/dialog-confirmation-create.component";
+import { SupabaseService } from '../../supabase.service';
 
 @Component({
     selector: 'app-home',
@@ -22,8 +23,7 @@ import { DialogConfirmationCreateComponent } from "../../shared/dialog/dialog-co
     templateUrl: './home.component.html',
     styleUrl: './home.component.css'
 })
-export class HomeComponent {
-  constructor(private router: Router, protected qrGeneratorService: QRGeneratorService) {}
+export class HomeComponent implements OnInit {
 
   readonly dialog = inject(MatDialog);
   protected readonly Plus = Plus;
@@ -67,6 +67,27 @@ export class HomeComponent {
       humidity: 80
     }
   ];
+
+  constructor(private router: Router, protected qrGeneratorService: QRGeneratorService, private supabaseService: SupabaseService) {}
+
+  ngOnInit() {
+    this.testSupabaseConnection();
+  }
+
+  async testSupabaseConnection() {
+    console.log('🔄 Test de connexion Supabase...');
+    const result = await this.supabaseService.testConnection();
+    
+    if (result) {
+      console.log('🎉 Connexion réussie !');
+    } else {
+      console.log('❌ Échec de la connexion');
+    }
+  }
+
+  async testConnection() {
+    await this.testSupabaseConnection();
+  }
 
   openAddPlantDialog(): void {
     this.dialog.open(DialogConfirmationCreateComponent, {
