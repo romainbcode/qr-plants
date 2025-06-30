@@ -30,7 +30,7 @@ export class DialogConfirmationCreateComponent {
   protected readonly X = X;
 
   plantForm = new UntypedFormGroup({  
-    name: new UntypedFormControl('', [Validators.required]),
+    id: new UntypedFormControl('', [Validators.required]),
   })
 
   cancel(): void {
@@ -38,8 +38,12 @@ export class DialogConfirmationCreateComponent {
   }
 
   confirm(): void {
-    this.dialogRef.close(true);
-    this.plantService.createPlant("plantname");
+    //appeler dans le fichier json la plante avec cet id
+    const plant = {
+      status: true,
+      id: this.plantForm.get('id')?.value,
+    }
+    this.dialogRef.close(plant);
   }
 
   selectedPlantId: number | null = null;

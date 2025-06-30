@@ -1,6 +1,7 @@
 import { Injectable, signal } from "@angular/core";
-import { from, Observable, of, tap } from "rxjs";
+import { from, map, Observable, of, tap } from "rxjs";
 import { SupabaseService } from "../../supabase.service";
+import { Plante } from "../../models/plante.model";
 
 @Injectable({
     providedIn: 'root',
@@ -20,48 +21,7 @@ export class PlantService {
         );
     }
 
-    /*getPlants(): Observable<any[]> {
-        return of([
-            {
-                id: 1,
-                name: "Plante 1",
-                difficulty: 2,
-                type: "bean"
-            },
-            {
-                id: 2,
-                name: "Plante 2",
-                difficulty: 3,
-                type: "plant"
-            },
-            {
-                id: 3,
-                name: "Plante 1",
-                difficulty: 2,
-                type: "bean"
-            },
-            {
-                id: 4,
-                name: "Plante 2",
-                difficulty: 3,
-                type: "plant"
-            },
-            {
-                id: 5,
-                name: "Plante 1",
-                difficulty: 2,
-                type: "bean"
-            },
-            {
-                id: 6,
-                name: "Plante 2",
-                difficulty: 3,
-                type: "plant"
-            }
-        ])
-    }*/
-
-    getPlants(): Observable<any[]> {
+    getPlants(): Observable<Plante[]> {
         return from(
             this.supabaseService.client
                 .from('plantes')
@@ -72,30 +32,92 @@ export class PlantService {
                         throw error;
                     }
                     
-                    // Transformer les données pour correspondre à l'interface Plant
-                    return data?.map(plant => ({
-                        id: plant.id,
-                        name: plant.nom,
-                        difficulty: plant.difficulte || 1,
-                        //type: this.getPlantType(plant.nom) // Fonction pour déterminer le type
-                    })) || [];
+                    return data?.map((plant: Plante) => this.mapPlante(plant)) || [];
                 })
         );
     }
     
 
-    getPlantById(id: string): Observable<any> {
-        return of({
-            id: 2,
-            name: "Plante 2",
-        })
+    getPlantById(id: string): Observable<Plante> {
+        return from(
+            this.supabaseService.client
+                .from('plantes')
+                .select('*')
+                .eq('id', id)
+                .single()
+                .then(({ data, error }) => {
+                    if (error) {
+                        console.error('Erreur Supabase:', error);
+                        throw error;
+                    }
+
+                    if(!data) {
+                        throw new Error('Plante non trouvée');
+                    }
+
+                    return this.mapPlante(data);
+                })
+        );
     }
 
-    createPlant(plant: any) {
+    createPlant(plant: Plante): Observable<Plante> {
+        return from(
+            this.supabaseService.client
+                .from('plantes')
+                .insert(plant)
+            )
+            .pipe(
+                map(({ data, error }) => {
+                    if (error) {
+                        console.error('Erreur Supabase:', error);
+                        throw error;
+                    }
 
-    /*return this.httpClient
-      .request('POST', '/animal', { body: createAnimalDto })
-      .pipe(mergeMap(() => this.reloadAnimaux()));*/
-  }
+                    const plant = this.mapPlante(data);
+
+                    this.plants.update(plants => [...plants, plant]);
+
+                    return plant;
+                })
+            )
+    }
+
+    deletePlant(id: number): Observable<Plante> {
+        return from(
+            this.supabaseService.client
+                .from('plantes')
+                .delete()
+                .eq('id', id)
+                .select()
+            )
+            .pipe(
+                map(({ data, error }) => {
+                    if (error) {
+                        console.error('Erreur Supabase:', error);
+                        throw error;
+                    }
+
+                    this.plants.update(plants => plants.filter(plant => plant.id !== id));
+
+                    return this.mapPlante(data);
+                })
+            )
+    }
+
+    private mapPlante(plant: any): Plante {
+        return {
+            id: plant.id,
+            name: plant.nom,
+            difficulty: plant.difficulte,
+            humidity: plant.humidite,
+            exposition: plant.luminosite,
+            temperature: plant.temperature,
+            description_reproductivite: plant.description_reproductivite,
+            description_origine: plant.description_origine,
+            description_toxicite: plant.description_toxicite,
+            created_at: plant.created_at,
+        };
+    }
+    
 }
   

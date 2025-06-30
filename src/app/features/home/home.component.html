@@ -12,12 +12,14 @@
     <div class="overflow-auto mt-2">
         <div class="d-grid gap-2" style="grid-template-columns: repeat(2, 1fr); ">
             <app-plant-list-card
-                *ngFor="let plant of plants"
+                *ngFor="let plant of plantService.plants()"
                 [temperature]="plant.temperature"
                 [exposition]="plant.exposition"
                 [humidity]="plant.humidity"
                 [plantId]="plant.id"
-                (click)="goToPlant(123)"
+                [name]="plant.name"
+                [difficulty]="plant.difficulty"
+                (click)="goToPlant(plant.id)"
                 style="cursor: pointer;"
                 >
             </app-plant-list-card>

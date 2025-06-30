@@ -15,6 +15,8 @@ import { QrGeneratorComponent } from "../../shared/dialog/dialog-qrcode/dialog-q
 import { QRGeneratorService } from "../../shared/dialog/dialog-qrcode/dialog-qrcode.service";
 import { DialogConfirmationCreateComponent } from "../../shared/dialog/dialog-confirmation-create/dialog-confirmation-create.component";
 import { SupabaseService } from '../../supabase.service';
+import { PlantService } from "../plant/plant.service";
+import { Plante } from "../../models/plante.model";
 
 @Component({
     selector: 'app-home',
@@ -23,75 +25,21 @@ import { SupabaseService } from '../../supabase.service';
     templateUrl: './home.component.html',
     styleUrl: './home.component.css'
 })
-export class HomeComponent implements OnInit {
-
+export class HomeComponent{
   readonly dialog = inject(MatDialog);
+
   protected readonly Plus = Plus;
   protected readonly QrCode = QrCode;
 
-  plants = [
-    {
-      id: 1,
-      temperature: 22,
-      exposition: 65,
-      humidity: 60
-    },
-    {
-      id: 2,
-      temperature: 18,
-      exposition: 50,
-      humidity: 70
-    },
-    {
-      id: 3,
-      temperature: 25,
-      exposition: 40,
-      humidity: 80
-    },
-    {
-      id: 4,
-      temperature: 22,
-      exposition: 80,
-      humidity: 60
-    },
-    {
-      id: 5,
-      temperature: 18,
-      exposition: 50,
-      humidity: 70
-    },
-    {
-      id: 6,
-      temperature: 25,
-      exposition: 40,
-      humidity: 80
-    }
-  ];
-
-  constructor(private router: Router, protected qrGeneratorService: QRGeneratorService, private supabaseService: SupabaseService) {}
-
-  ngOnInit() {
-    this.testSupabaseConnection();
-  }
-
-  async testSupabaseConnection() {
-    console.log('🔄 Test de connexion Supabase...');
-    const result = await this.supabaseService.testConnection();
-    
-    if (result) {
-      console.log('🎉 Connexion réussie !');
-    } else {
-      console.log('❌ Échec de la connexion');
-    }
-  }
-
-  async testConnection() {
-    await this.testSupabaseConnection();
-  }
+  constructor(private router: Router, protected qrGeneratorService: QRGeneratorService, protected plantService: PlantService) {}
 
   openAddPlantDialog(): void {
-    this.dialog.open(DialogConfirmationCreateComponent, {
+    const dialogRef = this.dialog.open(DialogConfirmationCreateComponent, {
       width: '500px',
+    })
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result.status) this.plantService.createPlant(result.id).subscribe();
     })
   }
 

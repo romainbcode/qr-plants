@@ -1,6 +1,6 @@
 <div class="plant-card d-flex flex-column w-full pb-3 mt-3" style="background-color: white;">
     <div class="d-flex flex-row justify-content-between align-items-center position-relative px-2 pt-2">
-        <app-badge-difficulty [difficulty]="2"></app-badge-difficulty>
+        <app-badge-difficulty [difficulty]="difficulty"></app-badge-difficulty>
         <div class="position-absolute top-0 start-50 translate-middle">
             <app-badge-status [etat]="etat"></app-badge-status>
         </div>
@@ -13,7 +13,7 @@
         <img [src]="getImagePath()" alt="Mon image" class="plant-image">
     </div>
     <div class="mb-2 px-2">
-        <span class="fw-bold" style="font-size: 16px;">Monstera</span>
+        <span class="fw-bold" style="font-size: 16px;">{{name}}</span>
     </div>
     <div class="d-flex flex-row justify-content-between align-items-center px-3">
         <app-plant-card-temperature [direction]="'row'" [temperature]="temperature"></app-plant-card-temperature>
