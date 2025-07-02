@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild } from "@angular/core";
 import { FormsModule, ReactiveFormsModule, UntypedFormControl, UntypedFormGroup, Validators } from "@angular/forms";
-import { PlantService } from "../plant.service";
+import { PlantService } from "../../../services/plant.service";
 import { CommonModule } from "@angular/common";
 import { MatDialogModule } from "@angular/material/dialog";
 import QRCodeStyling from "qr-code-styling";

@@ -1,5 +1,5 @@
 import { Component, ElementRef, Inject, OnInit, ViewChild } from "@angular/core";
-import { PlantService } from "../plant.service";
+import { PlantService } from "../../../services/plant.service";
 import { MAT_DIALOG_DATA, MatDialog, MatDialogModule } from "@angular/material/dialog";
 import { CommonModule } from "@angular/common";
 import { ActivatedRoute, Router } from '@angular/router';

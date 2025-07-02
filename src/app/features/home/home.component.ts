@@ -15,7 +15,7 @@ import { QrGeneratorComponent } from "../../shared/dialog/dialog-qrcode/dialog-q
 import { QRGeneratorService } from "../../shared/dialog/dialog-qrcode/dialog-qrcode.service";
 import { DialogConfirmationCreateComponent } from "../../shared/dialog/dialog-confirmation-create/dialog-confirmation-create.component";
 import { SupabaseService } from '../../supabase.service';
-import { PlantService } from "../plant/plant.service";
+import { PlantService } from "../../services/plant.service";
 import { Plante } from "../../models/plante.model";
 
 @Component({
@@ -39,7 +39,8 @@ export class HomeComponent{
     })
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result.status) this.plantService.createPlant(result.id).subscribe();
+      console.log(result)
+      if(result.status) this.plantService.associatePlantToHouse(result.id, 1).subscribe();
     })
   }
 

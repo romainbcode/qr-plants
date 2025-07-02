@@ -9,7 +9,7 @@ import {
   MatDialogRef
 } from '@angular/material/dialog';
 import { Check, Leaf, LucideAngularModule, X } from 'lucide-angular';
-import { PlantService } from '../../../features/plant/plant.service';
+import { PlantService } from '../../../services/plant.service';
 import { FormsModule, ReactiveFormsModule, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { BadgeDifficultyComponent } from '../../badge/badge-difficulty/badge-difficulty.component';
@@ -38,8 +38,7 @@ export class DialogConfirmationCreateComponent {
   }
 
   confirm(): void {
-    //appeler dans le fichier json la plante avec cet id
-    const plant = {
+    const plant: {status: boolean, id: number} = {
       status: true,
       id: this.plantForm.get('id')?.value,
     }
@@ -48,9 +47,9 @@ export class DialogConfirmationCreateComponent {
 
   selectedPlantId: number | null = null;
 
-selectPlant(id: number) {
-  this.selectedPlantId = id;
-  this.plantForm.get('name')?.setValue(id); // Met à jour le formControl
-}
+  selectPlant(id: number) {
+    this.selectedPlantId = id;
+    this.plantForm.get('id')?.setValue(id);
+  }
 
 }

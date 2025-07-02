@@ -14,7 +14,7 @@ import { MatDialog, MatDialogModule } from "@angular/material/dialog";
 import { DialogConfirmationDeleteComponent } from "../../../shared/dialog/dialog-confirmation-delete/dialog-confirmation-delete.component";
 import { Router } from "@angular/router";
 import { DialogConfirmationValidateComponent } from "../../../shared/dialog/dialog-confirmation-validate/dialog-confirmation-validate.component";
-import { PlantService } from "../plant.service";
+import { PlantService } from "../../../services/plant.service";
 
 @Component({
     selector: 'app-plant-list-card',

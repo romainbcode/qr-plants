@@ -1,7 +1,7 @@
 import { Injectable, signal } from "@angular/core";
 import { from, map, Observable, of, tap } from "rxjs";
-import { SupabaseService } from "../../supabase.service";
-import { Plante } from "../../models/plante.model";
+import { SupabaseService } from "../supabase.service";
+import { Plante } from "../models/plante.model";
 
 @Injectable({
     providedIn: 'root',
@@ -10,12 +10,13 @@ export class PlantService {
     plants = signal<any[]>([]);
 
     constructor(private supabaseService: SupabaseService) {
-        this.reloadPlants().subscribe();
+        this.reloadPlantsOfHouse().subscribe();
     }
 
-    reloadPlants(): Observable<any[]> {
-        return this.getPlants().pipe(
+    reloadPlantsOfHouse(): Observable<any[]> {
+        return this.getPlantsByHouseId(1).pipe(
             tap(plants => {
+                console.log(plants)
                 this.plants.set(plants);
             })
         );
@@ -36,7 +37,59 @@ export class PlantService {
                 })
         );
     }
-    
+
+    associatePlantToHouse(plantId: number, houseId: number): Observable<any> {
+        console.log(plantId)
+        return from(
+            this.supabaseService.client
+                .from('plantes_logement')
+                .insert({ plante_id: plantId, logement_id: houseId })
+        )
+        .pipe(
+            map(({ data, error }) => {
+                if (error) {
+                    console.error('Erreur Supabase:', error);
+                    throw error;
+                }
+                return data;
+            })
+        );
+    }
+
+    desassociatePlantToHouse(plantId: number, houseId: number): Observable<any> {
+        return from(
+            this.supabaseService.client
+                .from('plantes_logement')
+                .delete()
+                .eq('plante_id', plantId)
+                .eq('logement_id', houseId)     
+        )
+        .pipe(
+            map(({ data, error }) => {
+                if (error) {
+                    console.error('Erreur Supabase:', error);
+                    throw error;
+                }
+                return data;
+            })
+        );
+    }
+
+    getPlantsByHouseId(houseId: number): Observable<Plante[]> {
+        return from(
+            this.supabaseService.client
+                .from('plantes_logement')
+                .select('*, plantes(*)')
+                .eq('logement_id', houseId)
+                .then(({ data, error }) => {
+                    if (error) {
+                        console.error('Erreur Supabase:', error);
+                        throw error;
+                    }
+                    return data.map((plant: any) => this.mapPlante(plant.plantes)) || [];
+                })
+        );
+    }
 
     getPlantById(id: string): Observable<Plante> {
         return from(
