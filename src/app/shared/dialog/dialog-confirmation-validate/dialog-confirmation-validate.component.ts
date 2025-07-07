@@ -13,7 +13,6 @@ import { CalendarComponent } from "../../calendar/calendar.component";
   styleUrl: './dialog-confirmation-validate.component.css'
 })
 export class DialogConfirmationValidateComponent {
-  
   readonly dialogRef = inject(MatDialogRef<DialogConfirmationValidateComponent>);
   protected readonly Droplets = Droplets;
   protected readonly X = X;
@@ -26,5 +25,4 @@ export class DialogConfirmationValidateComponent {
   confirm(): void {
     return this.dialogRef.close(true);
   }
-
 }

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 import { PrimeNGConfig } from 'primeng/api';
+import { PlantService } from '../../services/plant.service';
 
 @Component({
   selector: 'app-calendar',
@@ -20,10 +21,11 @@ export class CalendarComponent {
   firstDayOfWeek: number = 1;
 
 
-  constructor(private primengConfig: PrimeNGConfig) {}
+  constructor(private primengConfig: PrimeNGConfig, protected plantService: PlantService) {}
 
   ngOnInit() {
     if(this.date2) {
+      console.log("test");
       this.date = this.date2;
     }
     this.primengConfig.setTranslation({
@@ -42,6 +44,8 @@ export class CalendarComponent {
 
   onDateSelect(event: any) {
     if (event) {
+      console.log("test2");
+      this.plantService.setWateringDate(event);
       this.dateSelected.emit(event);
     }
   }

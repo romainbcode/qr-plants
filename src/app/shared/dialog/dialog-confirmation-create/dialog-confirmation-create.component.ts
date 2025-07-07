@@ -24,7 +24,6 @@ import { BadgePlantUnitComponent } from '../../badge/badge-plant-unit/badge-plan
   styleUrl: './dialog-confirmation-create.component.css'
 })
 export class DialogConfirmationCreateComponent {
-  constructor(protected plantService: PlantService) {}
   readonly dialogRef = inject(MatDialogRef<DialogConfirmationCreateComponent>);
   protected readonly Leaf = Leaf;
   protected readonly X = X;
@@ -32,6 +31,8 @@ export class DialogConfirmationCreateComponent {
   plantForm = new UntypedFormGroup({  
     id: new UntypedFormControl('', [Validators.required]),
   })
+
+  constructor(protected plantService: PlantService) {}
 
   cancel(): void {
     this.dialogRef.close(false);

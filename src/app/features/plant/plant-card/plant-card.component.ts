@@ -27,8 +27,6 @@ import { QRGeneratorService } from "../../../shared/dialog/dialog-qrcode/dialog-
 export class PlantCardComponent implements OnInit {
     @ViewChild('qrContainer', { static: false }) qrContainer!: ElementRef<HTMLElement>;
 
-    constructor(protected plantService: PlantService, private activatedRoute: ActivatedRoute, protected qrGeneratorService: QRGeneratorService, private dialog: MatDialog, private router: Router) {}
-
     currentIdRoute: string = '';
     plant: any = {};
 
@@ -47,6 +45,12 @@ export class PlantCardComponent implements OnInit {
     protected readonly QrCode = QrCode;
     protected readonly ChevronLeft  = ChevronLeft;
     protected readonly Calendar = Calendar;
+
+    constructor(protected plantService: PlantService, private activatedRoute: ActivatedRoute, protected qrGeneratorService: QRGeneratorService, private dialog: MatDialog, private router: Router) {
+        if(!this.plantService.selectedPlant()) {
+            this.router.navigate(['/'])
+        }
+    }
 
     selectTab(tab: string) {
         this.activeTab = tab;

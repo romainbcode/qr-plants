@@ -82,14 +82,15 @@ export class PlantListCardComponent{
   }
 
   arroserPlante(id: number) {
-    /*const dialogRef = this.dialog.open(DialogConfirmationValidateComponent, {
+    const dialogRef = this.dialog.open(DialogConfirmationValidateComponent, {
       width: '500px'
     })
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result) console.log('plante arrosé')
-    })*/
-   this.router.navigate(['/watering/' + this.plantId], { queryParams: { name: this.title } });
+      if(result) {
+        this.plantService.wateringPlant(1, 2, this.plantService.wateringDate()!).subscribe();
+      }
+    })
   }
 
   deletePlant(id: number): void {
@@ -98,8 +99,7 @@ export class PlantListCardComponent{
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result, id);
-      if (result) this.plantService.deletePlant(id).subscribe();
+      if (result) this.plantService.desassociatePlantToHouse(id, 1).subscribe();
     });
   }
 

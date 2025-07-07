@@ -1,5 +1,5 @@
-import { Injectable, signal } from "@angular/core";
-import { from, map, Observable, of, tap } from "rxjs";
+import { computed, Injectable, signal } from "@angular/core";
+import { from, map, mergeMap, Observable, of, tap } from "rxjs";
 import { SupabaseService } from "../supabase.service";
 import { Plante } from "../models/plante.model";
 
@@ -7,34 +7,33 @@ import { Plante } from "../models/plante.model";
     providedIn: 'root',
 })
 export class PlantService {
+    plantsOfHouse = signal<any[]>([]);
     plants = signal<any[]>([]);
+    wateringDate = signal<Date | null>(null);
+    selectedPlantId = signal<number | null>(null);
+
+    selectedPlant = computed(() => {
+        return this.plantsOfHouse().find(p => p.id === this.selectedPlantId());
+    })
 
     constructor(private supabaseService: SupabaseService) {
         this.reloadPlantsOfHouse().subscribe();
+        this.reloadPlants().subscribe();
+    }
+
+    setSelectedPlantId(id: number): void {
+        this.selectedPlantId.set(id);
+    }
+
+    setWateringDate(date: Date): void {
+        this.wateringDate.set(date);
     }
 
     reloadPlantsOfHouse(): Observable<any[]> {
         return this.getPlantsByHouseId(1).pipe(
-            tap(plants => {
-                console.log(plants)
-                this.plants.set(plants);
+            tap(plantsOfHouse => {
+                this.plantsOfHouse.set(plantsOfHouse);
             })
-        );
-    }
-
-    getPlants(): Observable<Plante[]> {
-        return from(
-            this.supabaseService.client
-                .from('plantes')
-                .select('*')
-                .then(({ data, error }) => {
-                    if (error) {
-                        console.error('Erreur Supabase:', error);
-                        throw error;
-                    }
-                    
-                    return data?.map((plant: Plante) => this.mapPlante(plant)) || [];
-                })
         );
     }
 
@@ -46,13 +45,7 @@ export class PlantService {
                 .insert({ plante_id: plantId, logement_id: houseId })
         )
         .pipe(
-            map(({ data, error }) => {
-                if (error) {
-                    console.error('Erreur Supabase:', error);
-                    throw error;
-                }
-                return data;
-            })
+            mergeMap(() => this.reloadPlantsOfHouse())
         );
     }
 
@@ -75,6 +68,14 @@ export class PlantService {
         );
     }
 
+    reloadPlants(): Observable<any[]> {
+        return this.getPlants().pipe(
+            tap(plants => {
+                this.plants.set(plants);
+            })
+        );
+    }
+
     getPlantsByHouseId(houseId: number): Observable<Plante[]> {
         return from(
             this.supabaseService.client
@@ -87,6 +88,22 @@ export class PlantService {
                         throw error;
                     }
                     return data.map((plant: any) => this.mapPlante(plant.plantes)) || [];
+                })
+        );
+    }
+
+    getPlants(): Observable<Plante[]> {
+        return from(
+            this.supabaseService.client
+                .from('plantes')
+                .select('*')
+                .then(({ data, error }) => {
+                    if (error) {
+                        console.error('Erreur Supabase:', error);
+                        throw error;
+                    }
+                    
+                    return data?.map((plant: Plante) => this.mapPlante(plant)) || [];
                 })
         );
     }
@@ -113,48 +130,16 @@ export class PlantService {
         );
     }
 
-    createPlant(plant: Plante): Observable<Plante> {
+    wateringPlant(user_id: number, plantes_logement_id: number, date: Date): Observable<any> {
         return from(
             this.supabaseService.client
-                .from('plantes')
-                .insert(plant)
-            )
-            .pipe(
-                map(({ data, error }) => {
-                    if (error) {
-                        console.error('Erreur Supabase:', error);
-                        throw error;
-                    }
-
-                    const plant = this.mapPlante(data);
-
-                    this.plants.update(plants => [...plants, plant]);
-
-                    return plant;
+                .from('arrosages')
+                .insert({
+                    user_id: user_id,
+                    plantes_logement_id: plantes_logement_id,
+                    date: date,
                 })
-            )
-    }
-
-    deletePlant(id: number): Observable<Plante> {
-        return from(
-            this.supabaseService.client
-                .from('plantes')
-                .delete()
-                .eq('id', id)
-                .select()
-            )
-            .pipe(
-                map(({ data, error }) => {
-                    if (error) {
-                        console.error('Erreur Supabase:', error);
-                        throw error;
-                    }
-
-                    this.plants.update(plants => plants.filter(plant => plant.id !== id));
-
-                    return this.mapPlante(data);
-                })
-            )
+        );
     }
 
     private mapPlante(plant: any): Plante {

@@ -30,13 +30,3 @@ export class DialogConfirmationDeleteComponent {
     this.dialogRef.close(true)
   }
 }
-
-/*deleteConsultation(id: number): void {
-    const dialogRef = this.dialog.open(DialogConfirmationDeleteComponent, {
-      width: '500px',
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) this.consultationService.deleteConsultationById(id).subscribe();
-    });
-  } */

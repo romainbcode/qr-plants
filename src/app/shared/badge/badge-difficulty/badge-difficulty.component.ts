@@ -10,7 +10,7 @@ import { Component, Input } from "@angular/core";
 })
 export class BadgeDifficultyComponent{
     @Input() difficulty: number = 0;
-    @Input() isTitleDisplayed: boolean = true;
+    @Input() isTitleDisplayed: boolean = false;
 
     getStars(): string[] {
         const stars = [];

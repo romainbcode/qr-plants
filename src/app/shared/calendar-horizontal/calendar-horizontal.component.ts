@@ -63,12 +63,7 @@ export class CalendarHorizontalComponent implements OnInit, AfterViewInit {
 
   isToday(date: Date): boolean {
     const now = new Date();
-    if(date.getDate() === now.getDate() &&
-      date.getMonth() === now.getMonth() &&
-      date.getFullYear() === now.getFullYear()) {
-        console.log(date)
-      }
-   
+    
     return (
       date.getDate() === now.getDate() &&
       date.getMonth() === now.getMonth() &&
@@ -103,21 +98,8 @@ export class CalendarHorizontalComponent implements OnInit, AfterViewInit {
   }
 
   waterPlant(date: Date | null) {
-    /*const dialogRef = this.dialog.open(DialogConfirmationValidateComponent  , {
-      width: '500px',
-      data: {
-        date
-      }
-    });
-  
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) console.log(date + " Plante arrosé");
-    });*/
     if(date) {
       this.router.navigate(['/watering/' + this.plantId], { queryParams: { name: this.plantName, date: date } });
     }
   }
-
-  
-
 }

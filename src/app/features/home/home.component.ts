@@ -39,7 +39,6 @@ export class HomeComponent{
     })
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result)
       if(result.status) this.plantService.associatePlantToHouse(result.id, 1).subscribe();
     })
   }
@@ -59,6 +58,7 @@ export class HomeComponent{
       }
 
   goToPlant(id: number): void {
+    this.plantService.setSelectedPlantId(id);
     this.router.navigate([`/${id}`])
   }
 }
