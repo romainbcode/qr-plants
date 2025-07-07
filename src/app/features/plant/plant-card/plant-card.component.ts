@@ -14,6 +14,7 @@ import { CalendarHorizontalComponent } from "../../../shared/calendar-horizontal
 import QRCodeStyling from "qr-code-styling";
 import { QrGeneratorComponent } from "../../../shared/dialog/dialog-qrcode/dialog-qrcode.component";
 import { QRGeneratorService } from "../../../shared/dialog/dialog-qrcode/dialog-qrcode.service";
+import { Subject, takeUntil, tap } from "rxjs";
 
 @Component({
     selector: 'app-plant-card',
@@ -27,16 +28,7 @@ import { QRGeneratorService } from "../../../shared/dialog/dialog-qrcode/dialog-
 export class PlantCardComponent implements OnInit {
     @ViewChild('qrContainer', { static: false }) qrContainer!: ElementRef<HTMLElement>;
 
-    currentIdRoute: string = '';
-    plant: any = {};
-
     etat: string = 'Hydraté';
-
-    temperature = 20;
-    exposition = 50;
-    humidity = 75;
-
-    title: string = "Monstera";
 
     activeTab = 'tab1';
 
@@ -47,18 +39,27 @@ export class PlantCardComponent implements OnInit {
     protected readonly Calendar = Calendar;
 
     constructor(protected plantService: PlantService, private activatedRoute: ActivatedRoute, protected qrGeneratorService: QRGeneratorService, private dialog: MatDialog, private router: Router) {
-        if(!this.plantService.selectedPlant()) {
-            this.router.navigate(['/'])
-        }
+        
     }
+
+    private destroy$ = new Subject<void>();
 
     selectTab(tab: string) {
         this.activeTab = tab;
     }
 
     ngOnInit(): void {
-        this.currentIdRoute = this.activatedRoute.snapshot.url.map(segment => segment.path).join('/');
-        this.plant = this.plantService.getPlantById(this.currentIdRoute).subscribe();
+        const currentRoutePlantId: number = +this.activatedRoute.snapshot.paramMap.get('id')!;
+
+        if(this.plantService.plantsOfHouse().length === 0) {
+            this.plantService.reloadPlantsOfHouse().pipe(
+                tap(() => this.plantService.setSelectedPlantId(currentRoutePlantId)),
+                takeUntil(this.destroy$)
+            ).subscribe();
+        }
+        else if (!this.plantService.selectedPlant()) {
+            this.plantService.setSelectedPlantId(currentRoutePlantId);
+        }
     }
 
     qrCode: QRCodeStyling | null = null;
@@ -80,11 +81,11 @@ export class PlantCardComponent implements OnInit {
     }   
 
     goToCalendar() {
-        this.router.navigate(['/watering/' + this.plant.id]);
+        this.router.navigate(['/watering/' + this.plantService.selectedPlant().id]);
     }
 
     getImagePath(): string {
-        switch (this.title.toLowerCase()) {
+        switch (this.plantService.selectedPlant().name.toLowerCase()) {
         case 'monstera':
             return 'assets/monstera.png';
         case 'orchide':
