@@ -68,6 +68,29 @@ export class PlantService {
         );
     }
 
+    getAssociationPlantToHouse(plantId: number, houseId: number): Observable<any> {
+        return from(
+            this.supabaseService.client
+                .from('plantes_logement')
+                .select('*')
+                .eq('plante_id', plantId)
+                .eq('logement_id', houseId)
+                .single()
+                .then(({ data, error }) => {
+                    if (error) {
+                        console.error('Erreur Supabase:', error);
+                        throw error;
+                    }
+
+                    if(!data) {
+                        throw new Error('Association non trouvée');
+                    }
+
+                    return data;
+                })
+        )
+    }
+
     reloadPlants(): Observable<any[]> {
         return this.getPlants().pipe(
             tap(plants => {

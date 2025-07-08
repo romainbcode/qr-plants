@@ -90,11 +90,16 @@ export class PlantCardComponent implements OnInit {
             return 'assets/monstera.png';
         case 'orchide':
             return 'assets/orchidee.png';
-        case 'cactus':
-            return 'assets/cactus.png';
-        // Ajoute d'autres cas selon tes besoins
+        case 'araignee':
+            return 'assets/plante-araignee.png';
+        case 'pothos':
+            return 'assets/pothos.png';
+        case 'lemon':
+            return 'assets/lemon.png';
+        case 'avocado':
+            return 'assets/avocado.png';
         default:
-            return 'assets/default.png'; // fallback
+            return 'Image introuvable';
         }
     }
 }

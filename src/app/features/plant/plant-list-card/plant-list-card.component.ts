@@ -15,6 +15,7 @@ import { DialogConfirmationDeleteComponent } from "../../../shared/dialog/dialog
 import { Router } from "@angular/router";
 import { DialogConfirmationValidateComponent } from "../../../shared/dialog/dialog-confirmation-validate/dialog-confirmation-validate.component";
 import { PlantService } from "../../../services/plant.service";
+import { mergeMap, Subject, takeUntil } from "rxjs";
 
 @Component({
     selector: 'app-plant-list-card',
@@ -27,20 +28,19 @@ import { PlantService } from "../../../services/plant.service";
     styleUrl: './plant-list-card.component.css'
 })
 export class PlantListCardComponent{
+  private destroy$ = new Subject<void>();
   
   readonly dialog = inject(MatDialog);
 
     @Input() temperature: number = 0;
     @Input() exposition: number = 0;
     @Input() humidity: number = 0;
-    @Input() plantId: number = 0;
     @Input() name: string = '';
+    @Input() particularity: string = '';
     @Input() difficulty: number = 0;
+    @Input() id: number = 0;
 
     etat: string = 'Hydraté';
-
-    title: string = 'Monstera';
-    
 
     protected readonly EllipsisVertical = EllipsisVertical;
     protected readonly Eye = Eye;
@@ -49,12 +49,12 @@ export class PlantListCardComponent{
       {
         label: 'Voir la plante',
         icon: 'pi pi-eye',
-        command: () => this.goToPlant(this.plantId)
+        command: () => this.goToPlant(this.id)
       },
       {
         label: 'Arroser la plante',
         icon: 'pi pi-refresh',
-        command: () => this.arroserPlante(this.plantId)
+        command: () => this.arroserPlante(this.id)
       },
       {
         separator: true
@@ -62,11 +62,12 @@ export class PlantListCardComponent{
       {
         label: 'Supprimer la plante',
         icon: 'pi pi-trash',
-        command: () => this.deletePlant(this.plantId)
+        command: () => this.deletePlant(this.id)
       }
     ];
 
-  constructor(protected router: Router, private plantService: PlantService) {}
+  constructor(protected router: Router, protected plantService: PlantService) {
+  }
 
 
     toggleMenu(menu: any, event: MouseEvent): void {
@@ -86,9 +87,17 @@ export class PlantListCardComponent{
       width: '500px'
     })
 
+    const userId = 1;
+    const houseId = 1;
+
     dialogRef.afterClosed().subscribe(result => {
       if(result) {
-        this.plantService.wateringPlant(1, 2, this.plantService.wateringDate()!).subscribe();
+        this.plantService.getAssociationPlantToHouse(this.id, houseId)
+          .pipe(
+            takeUntil(this.destroy$),
+            mergeMap((res) => this.plantService.wateringPlant(userId, res.id, this.plantService.wateringDate()!))
+          )
+        .subscribe()
       }
     })
   }
@@ -103,17 +112,22 @@ export class PlantListCardComponent{
     });
   }
 
-    getImagePath(): string {
-    switch (this.title.toLowerCase()) {
-      case 'monstera':
+  getImagePath(): string {
+    switch (this.name.toLowerCase()) {
+    case 'monstera':
         return 'assets/monstera.png';
-      case 'orchide':
+    case 'orchide':
         return 'assets/orchidee.png';
-      case 'cactus':
-        return 'assets/cactus.png';
-      // Ajoute d'autres cas selon tes besoins
-      default:
-        return 'assets/default.png'; // fallback
+    case 'araignee':
+        return 'assets/plante-araignee.png';
+    case 'pothos':
+        return 'assets/pothos.png';
+    case 'lemon':
+        return 'assets/lemon.png';
+    case 'avocado':
+        return 'assets/avocado.png';
+    default:
+        return 'Image introuvable';
     }
-  }
+}
 }
