@@ -9,5 +9,6 @@ export interface Plante {
     description_reproductivite: string;
     description_origine: string;
     description_toxicite: string;
+    conseil_arrosage: string;
     created_at: Date;
   }

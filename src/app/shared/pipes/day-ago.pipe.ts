@@ -12,8 +12,6 @@ export class DayAgoPipe implements PipeTransform {
     const [year, month, day] = value.split('-').map(part => parseInt(part, 10));
     const parsedDate = new Date(year, month - 1, day);
 
-    console.log(day, month, year, value)
-
     const now = new Date();
     const seconds = Math.floor((now.getTime() - parsedDate.getTime()) / 1000);
 

@@ -8,11 +8,14 @@ import { CalendarComponent } from "../../shared/calendar/calendar.component";
 import { ActivatedRoute } from "@angular/router";
 import { Location } from "@angular/common";
 import { DialogConfirmationValidateComponent } from "../../shared/dialog/dialog-confirmation-validate/dialog-confirmation-validate.component";
+import { PlantService } from "../../services/plant.service";
+import { Subject, takeUntil, tap } from "rxjs";
+import { DayAgoPipe } from "../../shared/pipes/day-ago.pipe";
 
 @Component({
     selector: 'app-watering',
     standalone: true,
-    imports: [CommonModule, MatDialogModule, LucideAngularModule, CalendarComponent],
+    imports: [CommonModule, MatDialogModule, LucideAngularModule, CalendarComponent, DayAgoPipe],
     templateUrl: './watering.component.html',
     styleUrl: './watering.component.css'
 })
@@ -23,8 +26,6 @@ export class WateringComponent {
     protected readonly CalendarSync = CalendarSync;
     protected readonly Info = Info;
     dateSelected: Date | undefined;
-    plantId: number = 0;
-    plantName: string = 'Plante';
     wateringAdvices: string[] = [
         'Arroser par le dessous',
         'Arroser par le haut doucement',
@@ -43,15 +44,26 @@ export class WateringComponent {
 
       private readonly dialog = inject(MatDialog);
 
-    constructor(private location: Location, private activatedRoute: ActivatedRoute) {}
+      private destroy$ = new Subject<void>();
+
+    constructor(private location: Location, private activatedRoute: ActivatedRoute, protected plantService: PlantService) {}
 
     
     ngOnInit(): void {
-        this.plantId = this.activatedRoute.snapshot.params['id'];
-        this.plantName = this.activatedRoute.snapshot.queryParams['name'];
-        if(this.activatedRoute.snapshot.queryParams['date']) {
-            this.onDateSelected(new Date(this.activatedRoute.snapshot.queryParams['date']));
-        }
+      const plantId = +this.activatedRoute.snapshot.paramMap.get('id')!;
+    
+      if(!this.plantService.selectedPlant()) {
+        this.plantService.getPlantById(plantId).pipe(
+            takeUntil(this.destroy$),
+            tap(plant => this.plantService.setSelectedPlantId(plant.id)),
+          ).subscribe()
+
+
+          this.plantService.getWateringPlant(1, 3).pipe(tap((data) => console.log(data))).subscribe()
+      }
+      if(this.activatedRoute.snapshot.queryParams['date']) {
+        this.onDateSelected(new Date(this.activatedRoute.snapshot.queryParams['date']));
+      }
     }
 
     onDateSelected(date: Date) {

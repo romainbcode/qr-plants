@@ -49,16 +49,13 @@ export class PlantCardComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        const currentRoutePlantId: number = +this.activatedRoute.snapshot.paramMap.get('id')!;
+        const plantId: number = +this.activatedRoute.snapshot.paramMap.get('id')!;
 
-        if(this.plantService.plantsOfHouse().length === 0) {
-            this.plantService.reloadPlantsOfHouse().pipe(
-                tap(() => this.plantService.setSelectedPlantId(currentRoutePlantId)),
-                takeUntil(this.destroy$)
-            ).subscribe();
-        }
-        else if (!this.plantService.selectedPlant()) {
-            this.plantService.setSelectedPlantId(currentRoutePlantId);
+        if (!this.plantService.selectedPlant()) {
+            this.plantService.getPlantById(plantId).pipe(
+                takeUntil(this.destroy$),
+                tap(plant => this.plantService.setSelectedPlantId(plant.id)),
+              ).subscribe()
         }
     }
 

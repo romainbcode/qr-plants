@@ -9,6 +9,7 @@ import { Plante } from "../models/plante.model";
 export class PlantService {
     plantsOfHouse = signal<any[]>([]);
     plants = signal<any[]>([]);
+    wateringPlantOfHouse = signal<any[]>([]);
     wateringDate = signal<Date | null>(null);
     selectedPlantId = signal<number | null>(null);
 
@@ -16,9 +17,37 @@ export class PlantService {
         return this.plantsOfHouse().find(p => p.id === this.selectedPlantId());
     })
 
+    lastWateringPlantDate = computed(() => {
+        return this.wateringPlantOfHouse().at(0).date;
+    })
+
+    recentWateringPlant = computed(() => {
+        return this.wateringPlantOfHouse().slice(0, 3);
+    })
+
+    averageDurationWateringPlant = computed(() => {
+        if (!this.wateringPlantOfHouse() || this.wateringPlantOfHouse().length === 1) {
+            return 0;
+        }
+
+        const intervals: number[] = [];
+        for (let i = 1; i < this.wateringPlantOfHouse().length; i++) {
+            const date1 = new Date(this.wateringPlantOfHouse().at(i).date);
+            const date2 = new Date(this.wateringPlantOfHouse().at(i-1).date);
+            const diffMs = date1.getTime() - date2.getTime();
+            const diffDays = diffMs / (1000 * 60 * 60 * 24);
+            intervals.push(diffDays);
+        }
+
+        const totalSum = intervals.reduce((sum, currentValue) => sum + currentValue, 0);
+
+        return Math.round(Math.abs(totalSum / intervals.length));
+    })
+
     constructor(private supabaseService: SupabaseService) {
-        this.reloadPlantsOfHouse().subscribe();
+        this.reloadPlantsOfHouse(1).subscribe();
         this.reloadPlants().subscribe();
+        this.reloadWateringPlant(1, 3).subscribe();
     }
 
     setSelectedPlantId(id: number): void {
@@ -29,8 +58,8 @@ export class PlantService {
         this.wateringDate.set(date);
     }
 
-    reloadPlantsOfHouse(): Observable<any[]> {
-        return this.getPlantsByHouseId(1).pipe(
+    reloadPlantsOfHouse(houseId: number): Observable<any[]> {
+        return this.getPlantsByHouseId(houseId).pipe(
             tap(plantsOfHouse => {
                 this.plantsOfHouse.set(plantsOfHouse);
             })
@@ -45,7 +74,7 @@ export class PlantService {
                 .insert({ plante_id: plantId, logement_id: houseId })
         )
         .pipe(
-            mergeMap(() => this.reloadPlantsOfHouse())
+            mergeMap(() => this.reloadPlantsOfHouse(houseId))
         );
     }
 
@@ -131,7 +160,7 @@ export class PlantService {
         );
     }
 
-    getPlantById(id: string): Observable<Plante> {
+    getPlantById(id: number): Observable<Plante> {
         return from(
             this.supabaseService.client
                 .from('plantes')
@@ -153,6 +182,12 @@ export class PlantService {
         );
     }
 
+    reloadWateringPlant(userId: number, plantesLogementId: number):  Observable<any[]> {
+        return this.getWateringPlant(userId, plantesLogementId).pipe(
+            tap(waterings => this.wateringPlantOfHouse.set(waterings))
+        )
+    }
+
     wateringPlant(user_id: number, plantes_logement_id: number, date: Date): Observable<any> {
         return from(
             this.supabaseService.client
@@ -161,6 +196,33 @@ export class PlantService {
                     user_id: user_id,
                     plantes_logement_id: plantes_logement_id,
                     date: date,
+                })
+        )
+        .pipe(
+            mergeMap(() => this.reloadWateringPlant(user_id, plantes_logement_id))
+        )
+    }
+
+    getWateringPlant(userId: number, plantesLogementId: number): Observable<any[]> {
+        return from(
+            this.supabaseService.client
+                .from('arrosages')
+                .select('*, utilisateurs(prenom, image)')
+                .eq('user_id', userId)
+                .eq('plantes_logement_id', plantesLogementId)
+                .order('date', { ascending: false })
+                .limit(10)
+                .then(({ data, error }) => {
+                    if (error) {
+                        console.error('Erreur Supabase:', error);
+                        throw error;
+                    }
+
+                    if(!data) {
+                        throw new Error('Arrosage non trouvée');
+                    }
+
+                    return data;
                 })
         );
     }
@@ -176,6 +238,7 @@ export class PlantService {
             description_reproductivite: plant.description_reproductivite,
             description_origine: plant.description_origine,
             description_toxicite: plant.description_toxicite,
+            conseil_arrosage: plant.conseil_arrosage,
             created_at: plant.created_at,
         };
     }
