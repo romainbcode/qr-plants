@@ -10,10 +10,14 @@
                     [class.active]="plant.id === selectedPlantId"
                     (click)="selectPlant(plant.id)"
                 >
-                    <app-badge-difficulty [isTitleDisplayed]="false" [difficulty]="plant.difficulty"></app-badge-difficulty>
-                    <app-badge-plant-unit [typeDisplayed]="plant.type"></app-badge-plant-unit>
-                    <div *ngIf="plant.type === 'plant'" style="margin-left: 3.5px;"></div>
-                    <span style="font-size: 12px;">{{ plant.name }}</span>
+                    <div class="d-flex flex-column" style="min-width: 88px;">
+                        <app-badge-difficulty [isTitleDisplayed]="false" [difficulty]="plant.difficulty"></app-badge-difficulty>
+                        <app-badge-plant-unit [typeDisplayed]="plant.type"></app-badge-plant-unit>
+                    </div>
+                    <div class="d-flex justify-content-center flex-column ml-1" style="margin-left: 1rem;">
+                        <span class="fw-bold" style="font-size: 13px;">{{ plant.name }}</span>
+                        <span *ngIf="plant.particularity" class="fw-normal fst-italic" style="font-size: 12px;">({{plant.particularity}})</span>
+                    </div>
                 </li>
             </ul>
         </div>

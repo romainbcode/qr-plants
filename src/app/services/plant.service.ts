@@ -240,6 +240,8 @@ export class PlantService {
             description_toxicite: plant.description_toxicite,
             conseil_arrosage: plant.conseil_arrosage,
             created_at: plant.created_at,
+            type: plant.type,
+            particularity: plant.particularite,
         };
     }
     

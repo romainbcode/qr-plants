@@ -10,7 +10,7 @@ import { Bean, LucideAngularModule, Sprout } from 'lucide-angular';
   styleUrl: './badge-plant-unit.component.css'
 })
 export class BadgePlantUnitComponent {
-  @Input() typeDisplayed!: 'plant' | 'bean';
+  @Input() typeDisplayed!: 'plante' | 'bouture';
 
   protected readonly Bean = Bean;
   protected readonly Sprout = Sprout;

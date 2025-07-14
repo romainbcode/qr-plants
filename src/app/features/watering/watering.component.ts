@@ -76,7 +76,4 @@ export class WateringComponent {
         if (result) console.log( new Date(2024, 2, 28) + " Plante arrosé");
       });
     }
-
-
-    
 }
