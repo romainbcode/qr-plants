@@ -53,4 +53,23 @@ export class DialogConfirmationCreateComponent {
     this.plantForm.get('id')?.setValue(id);
   }
 
+  getImagePath(name: string): string {
+    switch (name.toLowerCase()) {
+    case 'monstera':
+        return 'assets/monstera.png';
+    case 'orchide':
+        return 'assets/orchidee.png';
+    case 'araignee':
+        return 'assets/plante-araignee.png';
+    case 'pothos':
+        return 'assets/pothos.png';
+    case 'lemon':
+        return 'assets/lemon.png';
+    case 'avocado':
+        return 'assets/avocado.png';
+    default:
+        return 'Image introuvable';
+    }
+}
+
 }

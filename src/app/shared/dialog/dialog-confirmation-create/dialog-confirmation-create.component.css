@@ -31,3 +31,9 @@
     font-weight: 600;
     font-size: 13px;
 }
+
+.plant-image {
+    width: 35px !important;
+    height: 35px !important;
+    object-fit: cover !important;
+  }
