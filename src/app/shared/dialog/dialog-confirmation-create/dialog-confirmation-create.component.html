@@ -28,6 +28,6 @@
     
     <mat-dialog-actions class="d-flex justify-content-evenly p-0 mt-2" style="min-height: 0px;">
         <button class="cancel-button" (click)="cancel()">Non, annuler</button>
-        <button class="validate-button" (click)="confirm()">Oui, ajouter !</button>
+        <button class="validate-button" (click)="confirm()" [disabled]="!selectedPlantId">Oui, ajouter !</button>
     </mat-dialog-actions>
 </div>

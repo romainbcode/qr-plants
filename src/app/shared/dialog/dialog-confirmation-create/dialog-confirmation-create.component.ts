@@ -50,7 +50,11 @@ export class DialogConfirmationCreateComponent {
   selectedPlantId: number | null = null;
 
   selectPlant(id: number) {
-    this.selectedPlantId = id;
-    this.plantForm.get('id')?.setValue(id);
+    if(this.selectedPlantId === id) {
+      this.selectedPlantId = null;
+    } else {
+      this.selectedPlantId = id;
+      this.plantForm.get('id')?.setValue(id);
+    }
   }
 }
