@@ -16,7 +16,7 @@
                 <app-plant-card-humidity [direction]="'column'" [humidity]="plantService.selectedPlant().humidity"></app-plant-card-humidity>
             </div>
             <div class="mx-4"></div>
-            <img [src]="getImagePath()" alt="Mon image" class="plant-image">
+            <img [src]="utilsService.getImagePath(plantService.selectedPlant().name)" alt="Mon image" class="plant-image">
         </div>
     </div>
     <div class="d-flex flex-column align-items-center mx-2 my-2">

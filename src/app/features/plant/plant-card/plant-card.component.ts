@@ -15,6 +15,7 @@ import QRCodeStyling from "qr-code-styling";
 import { QrGeneratorComponent } from "../../../shared/dialog/dialog-qrcode/dialog-qrcode.component";
 import { QRGeneratorService } from "../../../shared/dialog/dialog-qrcode/dialog-qrcode.service";
 import { Subject, takeUntil, tap } from "rxjs";
+import { UtilsService } from "../../../services/utils.service";
 
 @Component({
     selector: 'app-plant-card',
@@ -38,7 +39,9 @@ export class PlantCardComponent implements OnInit {
     protected readonly ChevronLeft  = ChevronLeft;
     protected readonly Calendar = Calendar;
 
-    constructor(protected plantService: PlantService, private activatedRoute: ActivatedRoute, protected qrGeneratorService: QRGeneratorService, private dialog: MatDialog, private router: Router) {
+    constructor(protected plantService: PlantService, private activatedRoute: ActivatedRoute, 
+        protected qrGeneratorService: QRGeneratorService, protected utilsService: UtilsService,
+        private dialog: MatDialog, private router: Router) {
         
     }
 
@@ -79,24 +82,5 @@ export class PlantCardComponent implements OnInit {
 
     goToCalendar() {
         this.router.navigate(['/watering/' + this.plantService.selectedPlant().id]);
-    }
-
-    getImagePath(): string {
-        switch (this.plantService.selectedPlant().name.toLowerCase()) {
-        case 'monstera':
-            return 'assets/monstera.png';
-        case 'orchide':
-            return 'assets/orchidee.png';
-        case 'araignee':
-            return 'assets/plante-araignee.png';
-        case 'pothos':
-            return 'assets/pothos.png';
-        case 'lemon':
-            return 'assets/lemon.png';
-        case 'avocado':
-            return 'assets/avocado.png';
-        default:
-            return 'Image introuvable';
-        }
     }
 }

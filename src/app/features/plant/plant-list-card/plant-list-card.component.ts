@@ -16,6 +16,7 @@ import { Router } from "@angular/router";
 import { DialogConfirmationValidateComponent } from "../../../shared/dialog/dialog-confirmation-validate/dialog-confirmation-validate.component";
 import { PlantService } from "../../../services/plant.service";
 import { mergeMap, Subject, takeUntil } from "rxjs";
+import { UtilsService } from "../../../services/utils.service";
 
 @Component({
     selector: 'app-plant-list-card',
@@ -66,7 +67,7 @@ export class PlantListCardComponent{
       }
     ];
 
-  constructor(protected router: Router, protected plantService: PlantService) {
+  constructor(protected router: Router, protected plantService: PlantService, protected utilsService: UtilsService) {
   }
 
 
@@ -111,23 +112,4 @@ export class PlantListCardComponent{
       if (result) this.plantService.desassociatePlantToHouse(id, 1).subscribe();
     });
   }
-
-  getImagePath(): string {
-    switch (this.name.toLowerCase()) {
-    case 'monstera':
-        return 'assets/monstera.png';
-    case 'orchide':
-        return 'assets/orchidee.png';
-    case 'araignee':
-        return 'assets/plante-araignee.png';
-    case 'pothos':
-        return 'assets/pothos.png';
-    case 'lemon':
-        return 'assets/lemon.png';
-    case 'avocado':
-        return 'assets/avocado.png';
-    default:
-        return 'Image introuvable';
-    }
-}
 }
