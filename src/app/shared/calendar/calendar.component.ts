@@ -26,6 +26,7 @@ export class CalendarComponent {
   ngOnInit() {
     if(this.date2) {
       console.log("test");
+      this.plantService.setWateringDate(this.date2);
       this.date = this.date2;
     }
     this.primengConfig.setTranslation({

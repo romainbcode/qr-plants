@@ -1,15 +1,13 @@
 import { CommonModule } from "@angular/common";
 import { MatDialog, MatDialogModule } from "@angular/material/dialog";
 import { Calendar, CalendarSync, Info, LucideAngularModule, X } from "lucide-angular";
-import { PlantListCardComponent } from "../plant/plant-list-card/plant-list-card.component";
 import { Component, inject } from "@angular/core";
-import { Router } from "@angular/router";
 import { CalendarComponent } from "../../shared/calendar/calendar.component";
 import { ActivatedRoute } from "@angular/router";
 import { Location } from "@angular/common";
 import { DialogConfirmationValidateComponent } from "../../shared/dialog/dialog-confirmation-validate/dialog-confirmation-validate.component";
 import { PlantService } from "../../services/plant.service";
-import { Subject, takeUntil, tap } from "rxjs";
+import { mergeMap, Subject, takeUntil, tap } from "rxjs";
 import { DayAgoPipe } from "../../shared/pipes/day-ago.pipe";
 
 @Component({
@@ -31,14 +29,16 @@ export class WateringComponent {
   private destroy$ = new Subject<void>();
 
   dateSelected: Date | undefined;
+
+  plantId: number | undefined;
   
   constructor(private location: Location, private activatedRoute: ActivatedRoute, protected plantService: PlantService) {}
 
   ngOnInit(): void {
-    const plantId = +this.activatedRoute.snapshot.paramMap.get('id')!;
+    this.plantId = +this.activatedRoute.snapshot.paramMap.get('id')!;
   
     if(!this.plantService.selectedPlant()) {
-      this.plantService.getPlantById(plantId).pipe(
+      this.plantService.getPlantById(this.plantId).pipe(
           takeUntil(this.destroy$),
           tap(plant => this.plantService.setSelectedPlantId(plant.id)),
         ).subscribe()
@@ -64,16 +64,25 @@ export class WateringComponent {
   }
 
   openWaterPlantDialog() {
-      //mettre une date en parametre
       const dialogRef = this.dialog.open(DialogConfirmationValidateComponent  , {
         width: '500px',
         data: {
           date: new Date(2024, 2, 28)
         }
       });
+
+      const userId = 1;
+      const houseId = 1;
     
       dialogRef.afterClosed().subscribe(result => {
-        if (result) console.log( new Date(2024, 2, 28) + " Plante arrosé");
+        if (result) {
+          this.plantService.getAssociationPlantToHouse(this.plantId!, houseId)
+          .pipe(
+            takeUntil(this.destroy$),
+            mergeMap((res) => this.plantService.wateringPlant(userId, res.id, this.plantService.wateringDate()!))
+          )
+        .subscribe()
+        }
       });
     }
 }
