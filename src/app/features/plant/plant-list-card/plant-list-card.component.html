@@ -4,7 +4,20 @@
         <div class="position-absolute top-0 start-50 translate-middle">
             <app-badge-status [etat]="etat"></app-badge-status>
         </div>
-        <p-menu #menu [popup]="true" [model]="menuItems" appendTo="body"></p-menu>
+        <p-menu #menu [popup]="true" [model]="menuItems" appendTo="body">
+            <ng-template let-item pTemplate="item">
+                <span class="d-flex align-items-center gap-2 py-1" style="cursor: pointer;">
+                    <ng-container [ngSwitch]="item.label">
+                        <lucide-icon *ngSwitchCase="'Voir la plante'" [name]="Eye"></lucide-icon>
+                        <lucide-icon *ngSwitchCase="'Arroser la plante'" [name]="Droplet"></lucide-icon>
+                        <lucide-icon *ngSwitchCase="'Supprimer la plante'" [name]="Trash"></lucide-icon>
+                    </ng-container>
+                    <span>
+                        {{ item.label }}
+                    </span>
+                </span>
+            </ng-template>
+        </p-menu>
         <button type="button" class="btn btn-sm m-0 p-0" (click)="toggleMenu(menu, $event)">
             <lucide-icon [name]="EllipsisVertical"></lucide-icon>
         </button>

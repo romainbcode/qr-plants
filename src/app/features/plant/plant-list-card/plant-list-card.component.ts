@@ -1,7 +1,7 @@
 import { Component, inject, Input } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { BadgeStatus } from "../../../shared/badge/badge-status/badge-status.component";
-import { EllipsisVertical, Eye, LucideAngularModule } from "lucide-angular";
+import { Droplet, EllipsisVertical, Eye, LucideAngularModule, Trash } from "lucide-angular";
 import { PlantCardTemperatureComponent } from "../plant-card-temperature/plant-card-temperature.component";
 import { PlantCardExpositionComponent } from "../plant-card-light/plant-card-exposition.component";
 import { PlantCardHumidityComponent } from "../plant-card-humidity/plant-card-humidity.component";
@@ -45,16 +45,16 @@ export class PlantListCardComponent{
 
     protected readonly EllipsisVertical = EllipsisVertical;
     protected readonly Eye = Eye;
+    protected readonly Droplet = Droplet;
+    protected readonly Trash = Trash;
 
     menuItems: MenuItem[] = [
       {
         label: 'Voir la plante',
-        icon: 'pi pi-eye',
         command: () => this.goToPlant(this.id)
       },
       {
         label: 'Arroser la plante',
-        icon: 'pi pi-refresh',
         command: () => this.arroserPlante(this.id)
       },
       {
@@ -62,7 +62,6 @@ export class PlantListCardComponent{
       },
       {
         label: 'Supprimer la plante',
-        icon: 'pi pi-trash',
         command: () => this.deletePlant(this.id)
       }
     ];
