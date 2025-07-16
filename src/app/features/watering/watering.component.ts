@@ -46,13 +46,10 @@ export class WateringComponent {
 
         this.plantService.getWateringPlant(1, 3).pipe(tap((data) => console.log(data))).subscribe()
     }
-    if(this.activatedRoute.snapshot.queryParams['date']) {
-      this.onDateSelected(new Date(this.activatedRoute.snapshot.queryParams['date']));
-    }
-  }
 
-  onDateSelected(date: Date) {
-    this.dateSelected = date;
+    if(this.plantService.wateringDate()) {
+      this.dateSelected = this.plantService.wateringDate()!
+    }
   }
 
   onWatering() {

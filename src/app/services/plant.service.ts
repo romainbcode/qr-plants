@@ -189,13 +189,14 @@ export class PlantService {
     }
 
     wateringPlant(user_id: number, plantes_logement_id: number, date: Date): Observable<any> {
+        const dateUTC = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())).toISOString();
         return from(
             this.supabaseService.client
                 .from('arrosages')
                 .insert({
                     user_id: user_id,
                     plantes_logement_id: plantes_logement_id,
-                    date: date,
+                    date: dateUTC,
                 })
         )
         .pipe(

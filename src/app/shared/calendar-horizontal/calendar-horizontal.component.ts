@@ -3,6 +3,7 @@ import { Component, OnInit, ElementRef, ViewChild, AfterViewInit, Input, inject 
 import { MatDialog } from '@angular/material/dialog';
 import { DialogConfirmationValidateComponent } from '../dialog/dialog-confirmation-validate/dialog-confirmation-validate.component';
 import { Router } from '@angular/router';
+import { PlantService } from '../../services/plant.service';
 
 @Component({
   selector: 'app-calendar-horizontal',
@@ -17,11 +18,13 @@ export class CalendarHorizontalComponent implements OnInit, AfterViewInit {
   days: { date: Date; number: number; letters: string }[] = [];
   todayIndex: number = 0;
   plantName: string = 'Monstera';
+  selectedDate: Date | null = null;
+
   readonly dialog = inject(MatDialog);
 
   @ViewChild('scrollContainer') scrollContainer!: ElementRef;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, protected plantService: PlantService) {}
 
   ngOnInit() {
     const today = new Date(); 
@@ -83,10 +86,11 @@ export class CalendarHorizontalComponent implements OnInit, AfterViewInit {
     return this.highlightedDates.includes(dateStr);
   }
 
-  selectedDate: Date | null = null;
 
   selectDate(date: Date) {
     this.selectedDate = date;
+    console.log(date)
+    this.plantService.setWateringDate(date)
   }
 
   isSelected(date: Date): boolean {
@@ -99,7 +103,7 @@ export class CalendarHorizontalComponent implements OnInit, AfterViewInit {
 
   waterPlant(date: Date | null) {
     if(date) {
-      this.router.navigate(['/watering/' + this.plantId], { queryParams: { name: this.plantName, date: date } });
+      this.router.navigate(['/watering/' + this.plantId]);
     }
   }
 }

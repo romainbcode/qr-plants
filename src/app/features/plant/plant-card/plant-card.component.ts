@@ -9,7 +9,6 @@ import { PlantCardTemperatureComponent } from "../plant-card-temperature/plant-c
 import { PlantCardExpositionComponent } from "../plant-card-light/plant-card-exposition.component";
 import { PlantCardHumidityComponent } from "../plant-card-humidity/plant-card-humidity.component";
 import { Calendar, ChevronLeft, House, LucideAngularModule, QrCode } from "lucide-angular";
-import { CalendarComponent } from "../../../shared/calendar/calendar.component";
 import { CalendarHorizontalComponent } from "../../../shared/calendar-horizontal/calendar-horizontal.component";
 import QRCodeStyling from "qr-code-styling";
 import { QrGeneratorComponent } from "../../../shared/dialog/dialog-qrcode/dialog-qrcode.component";
@@ -22,7 +21,7 @@ import { UtilsService } from "../../../services/utils.service";
     standalone: true,
     imports: [CommonModule, MatDialogModule, BadgeDifficultyComponent, BadgeStatus,
         PlantCardTemperatureComponent, PlantCardExpositionComponent, PlantCardHumidityComponent,
-    LucideAngularModule, CalendarComponent, CalendarHorizontalComponent, MatDialogModule],
+    LucideAngularModule, CalendarHorizontalComponent, MatDialogModule],
     templateUrl: './plant-card.component.html',
     styleUrl: './plant-card.component.css'
 })

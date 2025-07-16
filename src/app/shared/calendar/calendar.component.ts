@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
@@ -13,24 +13,22 @@ import { PlantService } from '../../services/plant.service';
   styleUrl: './calendar.component.css'
 })
 export class CalendarComponent {
-  @Output() dateSelected = new EventEmitter<Date>();
   @Input() date2: Date | undefined;
 
   date: Date | null = null;
 
   firstDayOfWeek: number = 1;
 
+  dateSelected: Date | null = null;
 
   constructor(private primengConfig: PrimeNGConfig, protected plantService: PlantService) {}
 
   ngOnInit() {
     if(this.date2) {
-      console.log("test");
       this.plantService.setWateringDate(this.date2);
-      this.date = this.date2;
+      this.dateSelected = this.date2;
     }
     this.primengConfig.setTranslation({
-      firstDayOfWeek: 1,
       dayNames: ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"],
       dayNamesShort: ["dim", "lun", "mar", "mer", "jeu", "ven", "sam"],
       dayNamesMin: ["D","L","M","M","J","V","S"],
@@ -45,9 +43,7 @@ export class CalendarComponent {
 
   onDateSelect(event: any) {
     if (event) {
-      console.log("test2");
       this.plantService.setWateringDate(event);
-      this.dateSelected.emit(event);
     }
   }
 }
