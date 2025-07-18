@@ -50,18 +50,18 @@ export class PlantListCardComponent{
 
     menuItems: MenuItem[] = [
       {
-        label: 'Voir la plante',
+        label: 'Voir',
         command: () => this.goToPlant(this.id)
       },
       {
-        label: 'Arroser la plante',
+        label: 'Arroser',
         command: () => this.arroserPlante(this.id)
       },
       {
         separator: true
       },
       {
-        label: 'Supprimer la plante',
+        label: 'Supprimer',
         command: () => this.deletePlant(this.id)
       }
     ];

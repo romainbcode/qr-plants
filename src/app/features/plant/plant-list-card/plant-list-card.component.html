@@ -4,13 +4,13 @@
         <div class="position-absolute top-0 start-50 translate-middle">
             <app-badge-status [etat]="etat"></app-badge-status>
         </div>
-        <p-menu #menu [popup]="true" [model]="menuItems" appendTo="body">
+        <p-menu #menu [popup]="true" [model]="menuItems" appendTo="body" [style]="{'max-width': '150px'}">
             <ng-template let-item pTemplate="item">
-                <span class="d-flex align-items-center gap-2 py-1" style="cursor: pointer;">
+                <span class="d-flex align-items-center py-1" style="cursor: pointer;">
                     <ng-container [ngSwitch]="item.label">
-                        <lucide-icon *ngSwitchCase="'Voir la plante'" [name]="Eye"></lucide-icon>
-                        <lucide-icon *ngSwitchCase="'Arroser la plante'" [name]="Droplet"></lucide-icon>
-                        <lucide-icon *ngSwitchCase="'Supprimer la plante'" [name]="Trash"></lucide-icon>
+                        <lucide-icon *ngSwitchCase="'Voir'" class="d-flex justify-content-center mx-1" [size]="18" [name]="Eye"></lucide-icon>
+                        <lucide-icon *ngSwitchCase="'Arroser'" class="d-flex justify-content-center mx-1" [size]="18" [name]="Droplet"></lucide-icon>
+                        <lucide-icon *ngSwitchCase="'Supprimer'" class="d-flex justify-content-center mx-1" [size]="18" [name]="Trash"></lucide-icon>
                     </ng-container>
                     <span>
                         {{ item.label }}

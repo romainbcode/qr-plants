@@ -1,7 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { MatDialog, MatDialogModule } from "@angular/material/dialog";
 import { Calendar, CalendarSync, Info, LucideAngularModule, X } from "lucide-angular";
-import { Component, inject } from "@angular/core";
+import { Component, computed, inject } from "@angular/core";
 import { CalendarComponent } from "../../shared/calendar/calendar.component";
 import { ActivatedRoute } from "@angular/router";
 import { Location } from "@angular/common";
@@ -28,9 +28,10 @@ export class WateringComponent {
 
   private destroy$ = new Subject<void>();
 
-  dateSelected: Date | undefined;
+  dateSelected = computed(() => this.plantService.wateringDate() ?? null);
 
   plantId: number | undefined;
+  mesDatesSpeciales = [new Date(2025, 6, 10), new Date(2025, 8, 15)];
   
   constructor(private location: Location, private activatedRoute: ActivatedRoute, protected plantService: PlantService) {}
 
@@ -43,17 +44,8 @@ export class WateringComponent {
           tap(plant => this.plantService.setSelectedPlantId(plant.id)),
         ).subscribe()
 
-
         this.plantService.getWateringPlant(1, 3).pipe(tap((data) => console.log(data))).subscribe()
     }
-
-    if(this.plantService.wateringDate()) {
-      this.dateSelected = this.plantService.wateringDate()!
-    }
-  }
-
-  onWatering() {
-    console.log('Arroser');
   }
 
   goBack() {

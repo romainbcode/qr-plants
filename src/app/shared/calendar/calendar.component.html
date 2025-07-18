@@ -6,4 +6,23 @@
   showIcon="true"
   placeholder="Sélectionnez une date"
   (onSelect)="onDateSelect($event)">
+  <ng-template pTemplate="date" let-date>
+    <span
+      [ngStyle]="{
+        'background-color': isSelected(date) ? '#ebebed' : isAlreadyWatered(date) ? '#e1e3fc' : 'inherit',
+        'border-radius': (isAlreadyWatered(date) || isSelected(date)) ? '100%' : 'none',
+        'display': 'inline-block',
+        'width': '2em',
+        'height': '2em',
+        'line-height': '2em',
+        'text-align': 'center'
+      }"
+    >
+    <span
+      *ngIf="isToday(date)"
+      class="calendar-dot"
+    ></span>
+      {{ date.day }}
+    </span>
+  </ng-template>
 </p-calendar>

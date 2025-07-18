@@ -13,7 +13,8 @@ import { PlantService } from '../../services/plant.service';
   styleUrl: './calendar.component.css'
 })
 export class CalendarComponent {
-  @Input() date2: Date | undefined;
+  @Input() date2: Date | null = null;
+  @Input() dateWatered : Date[] = [];
 
   date: Date | null = null;
 
@@ -45,5 +46,32 @@ export class CalendarComponent {
     if (event) {
       this.plantService.setWateringDate(event);
     }
+  }
+
+  protected isToday(date: any): boolean {
+    const today = new Date();
+    return (
+      date.day === today.getDate() &&
+      date.month === today.getMonth() &&
+      date.year === today.getFullYear()
+    );
+  }
+
+  protected isAlreadyWatered(date: any): boolean {
+    return this.dateWatered.some(
+      d => d.getDate() === date.day &&
+           d.getMonth() === date.month &&
+           d.getFullYear() === date.year
+    );
+  }
+
+  protected isSelected(date: any): boolean {
+    if (!this.dateSelected) return false;
+
+    return (
+      this.dateSelected.getDate() === date.day &&
+      this.dateSelected.getMonth() === date.month &&
+      this.dateSelected.getFullYear() === date.year
+    );
   }
 }

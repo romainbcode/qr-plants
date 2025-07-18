@@ -48,15 +48,15 @@
     </div>
     <div class="my-2"></div>
     <div class="d-flex flex-column justify-content-center align-items-center">
-        <app-calendar [date2]="dateSelected"></app-calendar>
+        <app-calendar [date2]="dateSelected()" [dateWatered]="mesDatesSpeciales"></app-calendar>
     </div>
     <div style="position: fixed; bottom: 16px; left: 16px; right: 16px; z-index: 1000;"  >
         <button class="watering-button w-100" 
-                [disabled]="!dateSelected" 
-                [ngClass]="{'disabled-button': !dateSelected, 'enabled-button': dateSelected}" 
+                [disabled]="!dateSelected()" 
+                [ngClass]="{'disabled-button': !dateSelected(), 'enabled-button': dateSelected()}" 
                 (click)="openWaterPlantDialog()" 
                 style="border-radius: 8px;">
-            {{ dateSelected ? 'Arroser' : 'Sélectionnez une date' }}
+            {{ dateSelected() === null ? 'Sélectionnez une date' : 'Arroser' }}
         </button>
     </div>
 </div>
