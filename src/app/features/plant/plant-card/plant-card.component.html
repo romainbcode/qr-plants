@@ -1,14 +1,16 @@
 <div *ngIf="plantService.selectedPlant()" class="d-flex flex-column justify-content-between mx-2" style="height: 100svh;">
     <div class="d-flex justify-content-between mb-2 p-2 align-items-center">
         <lucide-icon [name]="ChevronLeft" (click)="goToHome()"></lucide-icon>
-        <span class="fw-bold" style="font-size: 22px;">{{ plantService.selectedPlant().name }}</span>
-        <app-badge-status [etat]="etat"></app-badge-status>
-        <lucide-icon [name]="QrCode" (click)="openQrCodeDialog($event)"></lucide-icon>
+        <div class="d-flex flex-column">
+            <span class="fw-bold" style="font-size: 22px;">{{ plantService.selectedPlant().name }}</span>
+            <span class="fw-normal fst-italic" style="font-size: 13px;">({{ plantService.selectedPlant().particularity }})</span>
+        </div>
+        <div class="d-flex flex-row justify-content-center align-items-center gap-4">
+            <app-badge-difficulty [difficulty]="plantService.selectedPlant().difficulty"></app-badge-difficulty>
+            <lucide-icon [name]="QrCode" (click)="openQrCodeDialog($event)"></lucide-icon>
+        </div>
     </div>
     <div class="d-flex flex-column p-4 position-relative" style="background-color: white;">
-        <div class="position-absolute top-0 end-0 translate-middle-x">
-            <app-badge-difficulty [difficulty]="plantService.selectedPlant().difficulty"></app-badge-difficulty>
-        </div>
         <div class="d-flex flex-row justify-content-evenly">
             <div class="d-flex flex-column justify-content-evenly">
                 <app-plant-card-temperature [direction]="'column'" [temperature]="plantService.selectedPlant().temperature"></app-plant-card-temperature>
@@ -20,7 +22,7 @@
         </div>
     </div>
     <div class="d-flex flex-column align-items-center mx-2 my-2">
-        <nav class="d-flex flex-row mb-3">
+        <nav class="d-flex flex-row mb-3" style="font-size: 14px;">
             <button class="nav-link" [class.active]="activeTab === 'tab1'" (click)="selectTab('tab1')">
                 Toxicité
             </button>
@@ -49,7 +51,7 @@
             <div class="d-flex justify-content-between flex-row mb-2">
                 <button class="calendar-button ms-auto" (click)="goToCalendar()">
                     Voir le calendrier
-                    <lucide-icon [name]="Calendar" size="16" style="width: 16px; height: 16px;"></lucide-icon>
+                    <lucide-icon [name]="Calendar" size="18"></lucide-icon>
                 </button>
             </div>
             <app-calendar-horizontal [plantId]="plantService.selectedPlant().id" [highlightedDates]="['15/06/2025', '20/06/2025', '25/06/2025']"></app-calendar-horizontal>

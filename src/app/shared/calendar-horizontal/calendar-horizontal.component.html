@@ -7,6 +7,7 @@
       [class.highlighted]="isHighlighted(day.date)"
       [class.active]="isSelected(day.date)"
       [class.today]="isToday(day.date)"
+      [class.alreadyWatered]="isAlreadyWatered(day.date)"
       (click)="selectDate(day.date)"
     >
       <div class="day-number">{{ day.number }}</div>
@@ -14,6 +15,14 @@
     </li>
   </ul>
 
-  <button [ngClass]="{'enabled-button': selectedDate, 'disabled-button': !selectedDate}" [disabled]="!selectedDate" class="water-button d-flex ms-auto" (click)="waterPlant(selectedDate)">Arroser</button>
+  <div class="d-flex justify-content-end">
+    <button 
+      [ngClass]="{'enabled-button': selectedDate, 'disabled-button': !selectedDate}" 
+      [disabled]="!selectedDate" 
+      class="water-button" 
+      (click)="waterPlant(selectedDate)">
+      Arroser
+    </button>
+  </div>
 </div>
 

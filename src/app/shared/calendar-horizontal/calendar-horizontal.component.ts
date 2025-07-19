@@ -20,6 +20,8 @@ export class CalendarHorizontalComponent implements OnInit, AfterViewInit {
   plantName: string = 'Monstera';
   selectedDate: Date | null = null;
 
+  mesDatesSpeciales = [new Date(2025, 6, 10), new Date(2025, 8, 15)];
+
   readonly dialog = inject(MatDialog);
 
   @ViewChild('scrollContainer') scrollContainer!: ElementRef;
@@ -98,6 +100,14 @@ export class CalendarHorizontalComponent implements OnInit, AfterViewInit {
       this.selectedDate?.getDate() === date.getDate() &&
       this.selectedDate?.getMonth() === date.getMonth() &&
       this.selectedDate?.getFullYear() === date.getFullYear()
+    );
+  }
+
+  protected isAlreadyWatered(date: Date): boolean {
+    return this.mesDatesSpeciales.some(
+      d => d.getDate() === date.getUTCDate() &&
+           d.getMonth() === date.getUTCMonth() &&
+           d.getFullYear() === date.getUTCFullYear()
     );
   }
 
