@@ -1,62 +1,114 @@
-<div *ngIf="plantService.selectedPlant()" class="d-flex flex-column justify-content-between mx-2" style="height: 100svh;">
-    <div class="d-flex justify-content-between mb-2 p-2">
-        <div class="d-flex justify-content-start align-items-center gap-4">
-            <lucide-icon [name]="ChevronLeft" (click)="goToHome()"></lucide-icon>
-            <div class="d-flex flex-column">
-                <span class="fw-bold" style="font-size: 22px;">{{ plantService.selectedPlant().name }}</span>
-                <span class="fw-normal fst-italic" style="font-size: 13px;">({{ plantService.selectedPlant().particularity }})</span>
-            </div>
-        </div>
-        <div class="d-flex flex-row justify-content-center align-items-center gap-4">
-            <app-badge-difficulty [difficulty]="plantService.selectedPlant().difficulty"></app-badge-difficulty>
-            <lucide-icon [name]="QrCode" (click)="openQrCodeDialog($event)"></lucide-icon>
-        </div>
+<div
+  *ngIf="plantService.selectedPlant()"
+  class="d-flex flex-column justify-content-between mx-2"
+  style="height: 100svh"
+>
+  <div class="d-flex justify-content-between mb-2 p-2">
+    <div class="d-flex justify-content-start align-items-center gap-4">
+      <lucide-icon [name]="ChevronLeft" (click)="goToHome()"></lucide-icon>
+      <div class="d-flex flex-column">
+        <span class="fw-bold" style="font-size: 22px">{{
+          plantService.selectedPlant().name
+        }}</span>
+        <span class="fw-normal fst-italic" style="font-size: 13px"
+          >({{ plantService.selectedPlant().particularity }})</span
+        >
+      </div>
     </div>
-    <div class="d-flex flex-column p-4 position-relative" style="background-color: white;">
-        <div class="d-flex flex-row justify-content-evenly">
-            <div class="d-flex flex-column justify-content-evenly">
-                <app-plant-card-temperature [direction]="'column'" [temperature]="plantService.selectedPlant().temperature"></app-plant-card-temperature>
-                <app-plant-card-exposition [direction]="'column'" [exposition]="plantService.selectedPlant().exposition"></app-plant-card-exposition>
-                <app-plant-card-humidity [direction]="'column'" [humidity]="plantService.selectedPlant().humidity"></app-plant-card-humidity>
-            </div>
-            <div class="mx-4"></div>
-            <img [src]="utilsService.getImagePath(plantService.selectedPlant().name)" alt="Mon image" class="plant-image">
-        </div>
+    <div
+      class="d-flex flex-row justify-content-center align-items-center gap-4"
+    >
+      <app-badge-difficulty
+        [difficulty]="plantService.selectedPlant().difficulty"
+      ></app-badge-difficulty>
+      <lucide-icon
+        [name]="QrCode"
+        (click)="openQrCodeDialog($event)"
+      ></lucide-icon>
     </div>
-    <div class="d-flex flex-column align-items-center mx-2 my-2">
-        <nav class="d-flex flex-row mb-3" style="font-size: 14px;">
-            <button class="nav-link" [class.active]="activeTab === 'tab1'" (click)="selectTab('tab1')">
-                Toxicité
-            </button>
-            <button class="nav-link mx-5" [class.active]="activeTab === 'tab2'" (click)="selectTab('tab2')">
-                Reproduction
-            </button>
-            <button class="nav-link" [class.active]="activeTab === 'tab3'" (click)="selectTab('tab3')">
-                Origine
-            </button>
-        </nav>
-        <div class="mx-4 text-start">
-            <div *ngIf="activeTab === 'tab1'">
-                <span style="font-size: 12px;">{{ plantService.selectedPlant().description_toxicite }}</span>
-            </div>
-            <div *ngIf="activeTab === 'tab2'">
-                <span style="font-size: 12px;">{{ plantService.selectedPlant().description_reproductivite }}</span>
-            </div>
-            <div *ngIf="activeTab === 'tab3'">
-                <span style="font-size: 12px;">{{ plantService.selectedPlant().description_origine }}</span>
-            </div>
-        </div>
+  </div>
+  <div
+    class="d-flex flex-column p-4 position-relative"
+    style="background-color: white"
+  >
+    <div class="d-flex flex-row justify-content-evenly">
+      <div class="d-flex flex-column justify-content-evenly">
+        <app-plant-card-temperature
+          [direction]="'column'"
+          [temperature]="plantService.selectedPlant().temperature"
+        ></app-plant-card-temperature>
+        <app-plant-card-exposition
+          [direction]="'column'"
+          [exposition]="plantService.selectedPlant().exposition"
+        ></app-plant-card-exposition>
+        <app-plant-card-humidity
+          [direction]="'column'"
+          [humidity]="plantService.selectedPlant().humidity"
+        ></app-plant-card-humidity>
+      </div>
+      <div class="mx-4"></div>
+      <img
+        [src]="utilsService.getImagePath(plantService.selectedPlant().name)"
+        alt="Mon image"
+        class="plant-image"
+      />
     </div>
-    <div>
-        <span class="fw-bold">Calendrier d'arrosage</span>
-        <div class="d-flex flex-column p-2 mt-2" style="background-color: white;">
-            <div class="d-flex justify-content-between flex-row mb-2">
-                <button class="calendar-button ms-auto" (click)="goToCalendar()">
-                    Voir le calendrier
-                    <lucide-icon [name]="Calendar" size="18"></lucide-icon>
-                </button>
-            </div>
-            <app-calendar-horizontal [plantId]="plantService.selectedPlant().id" [highlightedDates]="['15/06/2025', '20/06/2025', '25/06/2025']"></app-calendar-horizontal>
-        </div>
+  </div>
+  <div class="d-flex flex-column align-items-center mx-2 my-2">
+    <nav class="d-flex flex-row mb-3" style="font-size: 14px">
+      <button
+        class="nav-link"
+        [class.active]="activeTab === 'tab1'"
+        (click)="selectTab('tab1')"
+      >
+        Toxicité
+      </button>
+      <button
+        class="nav-link mx-5"
+        [class.active]="activeTab === 'tab2'"
+        (click)="selectTab('tab2')"
+      >
+        Reproduction
+      </button>
+      <button
+        class="nav-link"
+        [class.active]="activeTab === 'tab3'"
+        (click)="selectTab('tab3')"
+      >
+        Origine
+      </button>
+    </nav>
+    <div class="mx-4 text-start">
+      <div *ngIf="activeTab === 'tab1'">
+        <span style="font-size: 12px">{{
+          plantService.selectedPlant().description_toxicite
+        }}</span>
+      </div>
+      <div *ngIf="activeTab === 'tab2'">
+        <span style="font-size: 12px">{{
+          plantService.selectedPlant().description_reproductivite
+        }}</span>
+      </div>
+      <div *ngIf="activeTab === 'tab3'">
+        <span style="font-size: 12px">{{
+          plantService.selectedPlant().description_origine
+        }}</span>
+      </div>
     </div>
+  </div>
+  <div>
+    <span class="fw-bold">Calendrier d'arrosage</span>
+    <div class="d-flex flex-column p-2 mt-2" style="background-color: white">
+      <div class="d-flex justify-content-between flex-row mb-2">
+        <button class="calendar-button ms-auto" (click)="goToCalendar()">
+          Voir le calendrier
+          <lucide-icon [name]="Calendar" size="18"></lucide-icon>
+        </button>
+      </div>
+      <app-calendar-horizontal
+        [plantId]="plantService.selectedPlant().id"
+        [wateredDates]="wateredDates"
+      ></app-calendar-horizontal>
+    </div>
+  </div>
 </div>

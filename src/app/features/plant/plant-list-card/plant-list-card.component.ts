@@ -29,77 +29,56 @@ import { UtilsService } from "../../../services/utils.service";
     styleUrl: './plant-list-card.component.css'
 })
 export class PlantListCardComponent{
-  private destroy$ = new Subject<void>();
   
   readonly dialog = inject(MatDialog);
 
-    @Input() temperature: number = 0;
-    @Input() exposition: number = 0;
-    @Input() humidity: number = 0;
-    @Input() name: string = '';
-    @Input() particularity: string = '';
-    @Input() difficulty: number = 0;
-    @Input() id: number = 0;
+  @Input() temperature: number = 0;
+  @Input() exposition: number = 0;
+  @Input() humidity: number = 0;
+  @Input() name: string = '';
+  @Input() particularity: string = '';
+  @Input() difficulty: number = 0;
+  @Input() id: number = 0;
 
-    etat: string = 'Hydraté';
+  etat: string = 'Hydraté';
 
-    protected readonly EllipsisVertical = EllipsisVertical;
-    protected readonly Eye = Eye;
-    protected readonly Droplet = Droplet;
-    protected readonly Trash = Trash;
+  protected readonly EllipsisVertical = EllipsisVertical;
+  protected readonly Eye = Eye;
+  protected readonly Droplet = Droplet;
+  protected readonly Trash = Trash;
 
-    menuItems: MenuItem[] = [
-      {
-        label: 'Voir',
-        command: () => this.goToPlant(this.id)
-      },
-      {
-        label: 'Arroser',
-        command: () => this.arroserPlante(this.id)
-      },
-      {
-        separator: true
-      },
-      {
-        label: 'Supprimer',
-        command: () => this.deletePlant(this.id)
-      }
-    ];
-
-  constructor(protected router: Router, protected plantService: PlantService, protected utilsService: UtilsService) {
-  }
-
-
-    toggleMenu(menu: any, event: MouseEvent): void {
-      event.stopPropagation();
-
-      menu.toggle(event);
+  menuItems: MenuItem[] = [
+    {
+      label: 'Voir',
+      command: () => this.goToPlant(this.id)
+    },
+    {
+      label: 'Arroser',
+      command: () => this.waterPlant(this.id)
+    },
+    {
+      separator: true
+    },
+    {
+      label: 'Supprimer',
+      command: () => this.deletePlant(this.id)
     }
+  ];
 
-    
+  constructor(protected router: Router, protected plantService: PlantService, protected utilsService: UtilsService) {}
 
-  goToPlant(id: number) {
-    this.router.navigate([`/${id}`])
+
+  toggleMenu(menu: any, event: MouseEvent): void {
+    event.stopPropagation();
+    menu.toggle(event);
   }
 
-  arroserPlante(id: number) {
-    const dialogRef = this.dialog.open(DialogConfirmationValidateComponent, {
-      width: '500px'
-    })
+  goToPlant(plantId: number) {
+    this.router.navigate([`/${plantId}`])
+  }
 
-    const userId = 1;
-    const houseId = 1;
-
-    dialogRef.afterClosed().subscribe(result => {
-      if(result) {
-        this.plantService.getAssociationPlantToHouse(this.id, houseId)
-          .pipe(
-            takeUntil(this.destroy$),
-            mergeMap((res) => this.plantService.wateringPlant(userId, res.id, this.plantService.wateringDate()!))
-          )
-        .subscribe()
-      }
-    })
+  waterPlant(plantId: number) {
+    this.router.navigate([`/watering/${plantId}`]);
   }
 
   deletePlant(id: number): void {

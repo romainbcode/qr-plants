@@ -1,5 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ElementRef, ViewChild, AfterViewInit, Input, inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ElementRef,
+  ViewChild,
+  AfterViewInit,
+  Input,
+  inject,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogConfirmationValidateComponent } from '../dialog/dialog-confirmation-validate/dialog-confirmation-validate.component';
 import { Router } from '@angular/router';
@@ -8,19 +16,17 @@ import { PlantService } from '../../services/plant.service';
 @Component({
   selector: 'app-calendar-horizontal',
   standalone: true,
-    imports: [CommonModule],
+  imports: [CommonModule],
   templateUrl: './calendar-horizontal.component.html',
-  styleUrls: ['./calendar-horizontal.component.css']
+  styleUrls: ['./calendar-horizontal.component.css'],
 })
 export class CalendarHorizontalComponent implements OnInit, AfterViewInit {
   @Input() plantId!: number;
-  @Input() highlightedDates: string[] = [];
+  @Input() wateredDates: Date[] = [];
   days: { date: Date; number: number; letters: string }[] = [];
   todayIndex: number = 0;
   plantName: string = 'Monstera';
   selectedDate: Date | null = null;
-
-  mesDatesSpeciales = [new Date(2025, 6, 10), new Date(2025, 8, 15)];
 
   readonly dialog = inject(MatDialog);
 
@@ -29,7 +35,7 @@ export class CalendarHorizontalComponent implements OnInit, AfterViewInit {
   constructor(private router: Router, protected plantService: PlantService) {}
 
   ngOnInit() {
-    const today = new Date(); 
+    const today = new Date();
     const year = today.getFullYear();
     const month = today.getMonth();
 
@@ -37,17 +43,14 @@ export class CalendarHorizontalComponent implements OnInit, AfterViewInit {
 
     for (let day = 1; day <= daysInMonth; day++) {
       const d = new Date(year, month, day);
-      const letters = d
-        .toLocaleDateString('fr-FR', { weekday: 'narrow' })
-        .toUpperCase() + d
-        .toLocaleDateString('fr-FR', { weekday: 'short' })
-        .slice(1, 3)
-      
+      const letters =
+        d.toLocaleDateString('fr-FR', { weekday: 'narrow' }).toUpperCase() +
+        d.toLocaleDateString('fr-FR', { weekday: 'short' }).slice(1, 3);
 
       this.days.push({
         date: d,
         number: day,
-        letters: letters
+        letters: letters,
       });
 
       if (d.toDateString() === today.toDateString()) {
@@ -68,7 +71,7 @@ export class CalendarHorizontalComponent implements OnInit, AfterViewInit {
 
   isToday(date: Date): boolean {
     const now = new Date();
-    
+
     return (
       date.getDate() === now.getDate() &&
       date.getMonth() === now.getMonth() &&
@@ -83,16 +86,9 @@ export class CalendarHorizontalComponent implements OnInit, AfterViewInit {
     return `${dd}/${mm}/${yyyy}`;
   }
 
-  isHighlighted(date: Date): boolean {
-    const dateStr = this.formatDateToInput(date);
-    return this.highlightedDates.includes(dateStr);
-  }
-
-
   selectDate(date: Date) {
     this.selectedDate = date;
-    console.log(date)
-    this.plantService.setWateringDate(date)
+    this.plantService.setWateringDate(date);
   }
 
   isSelected(date: Date): boolean {
@@ -104,16 +100,17 @@ export class CalendarHorizontalComponent implements OnInit, AfterViewInit {
   }
 
   protected isAlreadyWatered(date: Date): boolean {
-    return this.mesDatesSpeciales.some(
-      d => d.getDate() === date.getUTCDate() &&
-           d.getMonth() === date.getUTCMonth() &&
-           d.getFullYear() === date.getUTCFullYear()
+    return this.wateredDates.some(
+      (d) =>
+        d.getDate() === date.getUTCDate() &&
+        d.getMonth() === date.getUTCMonth() &&
+        d.getFullYear() === date.getUTCFullYear()
     );
   }
 
   waterPlant(date: Date | null) {
-    if(date) {
-      this.router.navigate(['/watering/' + this.plantId]);
+    if (date) {
+      this.router.navigate([`/watering/${this.plantId}`]);
     }
   }
 }

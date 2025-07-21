@@ -1,10 +1,12 @@
 <div class="w-100">
-  <ul class="calendar-horizontal-list d-flex flex-row flex-nowrap" #scrollContainer>
+  <ul
+    class="calendar-horizontal-list d-flex flex-row flex-nowrap"
+    #scrollContainer
+  >
     <li
       *ngFor="let day of days"
       class="calendar-day-item text-center"
-      style="position: relative;"
-      [class.highlighted]="isHighlighted(day.date)"
+      style="position: relative"
       [class.active]="isSelected(day.date)"
       [class.today]="isToday(day.date)"
       [class.alreadyWatered]="isAlreadyWatered(day.date)"
@@ -16,13 +18,16 @@
   </ul>
 
   <div class="d-flex justify-content-end">
-    <button 
-      [ngClass]="{'enabled-button': selectedDate, 'disabled-button': !selectedDate}" 
-      [disabled]="!selectedDate" 
-      class="water-button" 
-      (click)="waterPlant(selectedDate)">
+    <button
+      [ngClass]="{
+        'enabled-button': selectedDate,
+        'disabled-button': !selectedDate
+      }"
+      [disabled]="!selectedDate"
+      class="water-button"
+      (click)="waterPlant(selectedDate)"
+    >
       Arroser
     </button>
   </div>
 </div>
-

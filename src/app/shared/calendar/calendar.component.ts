@@ -10,11 +10,11 @@ import { PlantService } from '../../services/plant.service';
   standalone: true,
   imports: [CommonModule, FormsModule, CalendarModule],
   templateUrl: './calendar.component.html',
-  styleUrl: './calendar.component.css'
+  styleUrl: './calendar.component.css',
 })
 export class CalendarComponent {
   @Input() date2: Date | null = null;
-  @Input() dateWatered : Date[] = [];
+  @Input() dateWatered: Date[] = [];
 
   date: Date | null = null;
 
@@ -22,23 +22,60 @@ export class CalendarComponent {
 
   dateSelected: Date | null = null;
 
-  constructor(private primengConfig: PrimeNGConfig, protected plantService: PlantService) {}
+  constructor(
+    private primengConfig: PrimeNGConfig,
+    protected plantService: PlantService
+  ) {}
 
   ngOnInit() {
-    if(this.date2) {
+    if (this.date2) {
       this.plantService.setWateringDate(this.date2);
       this.dateSelected = this.date2;
     }
     this.primengConfig.setTranslation({
-      dayNames: ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"],
-      dayNamesShort: ["dim", "lun", "mar", "mer", "jeu", "ven", "sam"],
-      dayNamesMin: ["D","L","M","M","J","V","S"],
-      monthNames: ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"],
-      monthNamesShort: ["janv", "févr", "mars", "avr", "mai", "juin", "juil", "août", "sept", "oct", "nov", "déc"],
-      today: 'Aujourd\'hui',
+      dayNames: [
+        'dimanche',
+        'lundi',
+        'mardi',
+        'mercredi',
+        'jeudi',
+        'vendredi',
+        'samedi',
+      ],
+      dayNamesShort: ['dim', 'lun', 'mar', 'mer', 'jeu', 'ven', 'sam'],
+      dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+      monthNames: [
+        'janvier',
+        'février',
+        'mars',
+        'avril',
+        'mai',
+        'juin',
+        'juillet',
+        'août',
+        'septembre',
+        'octobre',
+        'novembre',
+        'décembre',
+      ],
+      monthNamesShort: [
+        'janv',
+        'févr',
+        'mars',
+        'avr',
+        'mai',
+        'juin',
+        'juil',
+        'août',
+        'sept',
+        'oct',
+        'nov',
+        'déc',
+      ],
+      today: "Aujourd'hui",
       clear: 'Effacer',
       dateFormat: 'dd/mm/yy',
-      weekHeader: 'Sm'
+      weekHeader: 'Sm',
     });
   }
 
@@ -59,9 +96,10 @@ export class CalendarComponent {
 
   protected isAlreadyWatered(date: any): boolean {
     return this.dateWatered.some(
-      d => d.getDate() === date.day &&
-           d.getMonth() === date.month &&
-           d.getFullYear() === date.year
+      (d) =>
+        d.getDate() === date.day &&
+        d.getMonth() === date.month &&
+        d.getFullYear() === date.year
     );
   }
 
